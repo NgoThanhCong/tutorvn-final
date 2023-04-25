@@ -40,7 +40,7 @@ function App() {
             <Layout>
                 <Routes>
                     <Route path='/' element={<Home />} />
-                    <Route path='/dashboard' element={<Dashboard />} />
+                    {/* <Route path='/dashboard' element={<Dashboard />} /> */}
                 
                     <Route path='/profile' element={<Profile />} />
                     <Route path='/login' element={<Login />} />

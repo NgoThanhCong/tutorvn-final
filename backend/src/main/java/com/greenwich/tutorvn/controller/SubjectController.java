@@ -20,14 +20,14 @@ public class SubjectController {
     @GetMapping("/getsubject")  // gui yeu cau de lay du lieu
     ResponseEntity<ResponseObject> getListSubject()
     {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",
                 subjectRepository.findAll()));
     }
 
     @PostMapping("/insertsubject")
     ResponseEntity<ResponseObject> insert(@RequestBody SubjectClass subject)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",
                 subjectRepository.save(subject)));
     }
 
@@ -43,10 +43,10 @@ public class SubjectController {
         Optional<SubjectClass> optionalSubject = subjectRepository.findByName(name);
         if(optionalSubject.isPresent())
         {
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",
                     optionalSubject.get()));
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("NOT_Found","subject not found",
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject(201,"subject not found",
                ""));
     }
 }

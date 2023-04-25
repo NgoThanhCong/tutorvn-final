@@ -27,7 +27,7 @@ public class OrderCotroller {
     @GetMapping("/getorder")  // *gui yeu cau de lay du lieu
     ResponseEntity<ResponseObject> getListOrder()
     {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok",
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                 "Success",orderRepository.findAll()) );
     }
 
@@ -36,7 +36,7 @@ public class OrderCotroller {
     {
         List<Order> listOrder = new ArrayList<>();
         listOrder = orderService.getOrderpage(pageNum, pageSize);
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok",
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                 "Success",listOrder) );
     }
 
@@ -44,7 +44,7 @@ public class OrderCotroller {
     @GetMapping("/getOrderByTutor")
     ResponseEntity<ResponseObject> getListOrderByTutors()
     {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok",
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                 "Success",orderRepository.findAll( )) );
     }
 
@@ -56,7 +56,7 @@ public class OrderCotroller {
         order.setDelete(false);
         order.setActive(true);
         System.out.println("insertorder");
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok",
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                 "Success",orderRepository.save(order)));   // *.save(tutor) luu yeu cau va return lai gia tri
     }
 
@@ -68,10 +68,10 @@ public class OrderCotroller {
         {
             Order order = optionalOrder.get();
             order.setTutor_ID(requestOrder.getIdTutor());
-            return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok",
+            return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                     "Success",orderRepository.save(order) ));
         }
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject("Ok",
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject(200,
                 "Not implement","" ));
     }
 
@@ -83,10 +83,10 @@ public class OrderCotroller {
         {
             Order order = optionalOrder.get();
             order.getListTutorRequired().add(requestOrder.getIdTutor());
-            return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok",
+            return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                     "Success",orderRepository.save(order) ));
         }
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject("Ok",
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject(200,
                 "Not implement","" ));
     }
 
@@ -112,10 +112,10 @@ public class OrderCotroller {
             }
             order.setListTutorRequired(listIdTutor);
             //setTutor_ID(idTutor);
-            return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok",
+            return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                     "Success",orderRepository.save(order) ));
         }
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject("Ok",
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject(200,
                 "Not implement","" ));
     }
 
@@ -136,11 +136,11 @@ public class OrderCotroller {
         if(optionalOrder.isPresent())
         {
             // !Neu tim thay Tutor co id = id truyen vao tu ham thi tra ve
-            return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok",
+            return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                     "Success",optionalOrder.get())); // Lay ve doi tuong neu no ton tai
         }
         // !neu ko tim thay tra ve NULL
-        return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok",
+        return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                 "Success",""))
                 ; // Lay ve doi tuong neu no ton tai;
     }

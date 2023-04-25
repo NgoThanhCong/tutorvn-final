@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @RestController  // *khai bao anotation restcontroller de tao ra 1 class Rest API
 @RequestMapping(path  = "/api/v1/tutor")  // *tao ra URL cos dang /api/
- @CrossOrigin(origins = "http://localhost:3000,http://localhost:3002", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000,http://localhost:3002", maxAge = 3600)
 public class TutorController {
     /*
      *tang nay dung de tao ra cac router api duoi dang http url - restful API
@@ -45,21 +45,21 @@ public class TutorController {
     {
         List<Tutor> listTutor = new ArrayList<>();
         listTutor = tutorService.getTutorpage(pageNum, pageSize);
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok",
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                 "Success",listTutor));
     }
 
     @GetMapping("/getAll")  // *gui yeu cau de lay du lieu
     ResponseEntity<ResponseObject> getListTutorAll()
     {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",
                 tutorRepository.findAllByIsDelete(false)));
     }
 
     @PostMapping("/insertTutor")  // *gui len server mot du lieu de create/update 1 tai nguyen nao do
     ResponseEntity<ResponseObject> insert ( @RequestBody Tutor tutor)  // *@RequestBody dinh nghia 1 doi tuong truyen vao
     {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",
                 tutorRepository.save(tutor)));   // *.save(tutor) luu yeu cau va return lai gia tri
     }
 
@@ -89,10 +89,10 @@ public class TutorController {
 
         if (optionalTutor.isPresent())  // *isPresent la phuong thuc kiem tra co du lieu hay khong
         {
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",
                     optionalTutor.get()));  // *.get lay ve gia tri
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",tutorRepository));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",tutorRepository));
     }
 
     @GetMapping("/searchByName/{keyword}")
@@ -107,14 +107,14 @@ public class TutorController {
                 result.add(tutor);
             }
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",result));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",result));
 
     }
 
     @GetMapping("/gettutors")
     ResponseEntity<ResponseObject> getListTutor()
     {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",
                 tutorRepository.findAllByIsDelete(false)));
     }
 
@@ -125,9 +125,9 @@ public class TutorController {
         if(optionalTutor.isPresent())  // *kiem tra xem co ton tai ket qua optinalTutor hay  k
         {
             Tutor result = tutorRepository.save(tutor);  // *update ban ghi tutor truyen vao va tra ket qua ngay sau do
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",result));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",result));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",null));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",null));
     }
 
 
@@ -141,9 +141,9 @@ public class TutorController {
             tutor .setConfirmed(true);
 
             Tutor result = tutorRepository.save(tutor);  //update ban ghi tutor truyen vao va tra ket qua ngay sau do
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",result));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",result));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",null));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",null));
     }
 
 
@@ -159,8 +159,8 @@ public class TutorController {
             foundTutor.setPhone(phone);
             foundTutor.setEmail(email);
             Tutor result = tutorRepository.save(foundTutor);  //update ban ghi tutor truyen vao va tra ve ket qua ngay sau do
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",result));   // tra ve ket qua
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",result));   // tra ve ket qua
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",null));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",null));
     }
 }

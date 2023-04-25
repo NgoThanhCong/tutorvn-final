@@ -19,9 +19,8 @@ const Sidebar = () => {
   const location = useLocation()
 
   const Menus = [
-    { title: 'Dashboard', path: '/dashboard', src: <AiFillPieChart /> },
+    // { title: 'Dashboard', path: '/dashboard', src: <AiFillPieChart /> },
     { title: 'Course', path: '/course', src: <SiFuturelearn /> },
-    { title: 'Test', path: '/test', src: <GrGremlin /> },  
     { title: 'Tutor', path: '/tutor', src: <GrGroup /> }, // add tutor
     
     { title: 'Customer', path: '/customer', src: <GrGroup /> },

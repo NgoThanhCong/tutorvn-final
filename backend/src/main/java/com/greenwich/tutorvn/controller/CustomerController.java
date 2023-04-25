@@ -22,13 +22,13 @@ public class CustomerController
     ResponseEntity<ResponseObject> insert (@RequestBody Customer customer)
     {
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok","Success",customerRepository.save(customer)));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",customerRepository.save(customer)));
     }
 
     @GetMapping("/listCustomer")
     ResponseEntity<ResponseObject> getListCustomerAll()
     {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok",
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                 "Success",customerRepository.findAll()));
     }
     @DeleteMapping("/deleteCustomerById/{id}")
@@ -58,7 +58,7 @@ public class CustomerController
             result.add(customer);
         }
     }
-    return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok","Success",result));
+    return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",result));
 
 }
 // @DeleteMapping("/{id}")
@@ -74,11 +74,11 @@ public class CustomerController
      Optional<Customer> optionalCustomer=  customerRepository.findById(id);
      if(optionalCustomer.isPresent())
      {
-         return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok",
+         return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                  "Success",optionalCustomer.get()));
      }
 
-     return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok",
+     return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
              "Success",""));
 }
 
