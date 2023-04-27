@@ -5,6 +5,7 @@ import com.greenwich.tutorvn.model.ResponseObject;
 import com.greenwich.tutorvn.model.Tutor;
 import com.greenwich.tutorvn.repository.OrderRepository;
 import com.greenwich.tutorvn.request.RequestOrder;
+import com.greenwich.tutorvn.service.NotificationService;
 import com.greenwich.tutorvn.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,10 @@ public class OrderCotroller {
     OrderRepository orderRepository;
     @Autowired
     OrderService orderService;
+
+
+    @Autowired
+    NotificationService notificationService;
 
     @GetMapping("/getorder")  // *gui yeu cau de lay du lieu
     ResponseEntity<ResponseObject> getListOrder()
@@ -68,6 +73,7 @@ public class OrderCotroller {
         {
             Order order = optionalOrder.get();
             order.setTutor_ID(requestOrder.getIdTutor());
+
             return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                     "Success",orderRepository.save(order) ));
         }

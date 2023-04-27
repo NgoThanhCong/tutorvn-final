@@ -26,6 +26,8 @@ import InsertCustomer from './pages/customer/InsertCustomer'
 import DetailCustomer from './pages/customer/DetailCustomer'
 import EditCustomer from './pages/customer/EditCustomer'
 import Customer from './pages/customer/Customer'
+import Notification from './pages/notification/Notification'
+import InsertNotification from './pages/notification/InsertNotification'
 
 
 
@@ -62,6 +64,11 @@ function App() {
                     <Route path='/course/insert' element={<InsertCourse />} />
                     <Route path='/course/edit' element={<EditCourse />} />
                 
+                    <Route path='/notification' element={<Notification />} />  
+
+                    <Route path='/notification/insert' element={<InsertNotification />} />  
+                    <Route path='/notification/edit' element={<InsertNotification />} />  
+
 
                 </Routes>
             </Layout>

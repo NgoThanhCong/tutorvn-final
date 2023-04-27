@@ -150,10 +150,10 @@ const InsertTutor = () => {
       <input
         type="file"
         name="myImage"
-        onChange={(event) => {
+        onChange={async (event) => {
           // console.log(event.target.files[0]);
           setSelectedImage(event.target.files[0]);
-          if (selectedImage !== null) {
+          if (event.target.files[0] !== null) {
             let formData = new FormData();
             const config = {
               headers: {
@@ -163,7 +163,7 @@ const InsertTutor = () => {
             formData.append('file', event.target.files[0]);
             // the image field name should be similar to your api endpoint field name
             // in my case here the field name is customFile
-            axios.post(
+           await axios.post(
               "http://localhost:8080/api/v1/FileUpload",
               formData, config
             )

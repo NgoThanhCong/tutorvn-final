@@ -11,6 +11,8 @@ import Logo from '../assets/images/logo.svg'
 import { IconName } from "react-icons/gr";
 import HamburgerButton from './HamburgerMenuButton/HamburgerButton'
 import Tutor from './../pages/tutor/Tutor';
+import { IoNotificationsCircle } from "react-icons/io5";
+import { MdAccountCircle } from "react-icons/md";
 
 
 const Sidebar = () => {
@@ -23,7 +25,9 @@ const Sidebar = () => {
     { title: 'Course', path: '/course', src: <SiFuturelearn /> },
     { title: 'Tutor', path: '/tutor', src: <GrGroup /> }, // add tutor
     
-    { title: 'Customer', path: '/customer', src: <GrGroup /> },
+    { title: 'Customer', path: '/customer', src: <MdAccountCircle /> },
+    { title: 'Notification', path: '/notification', src: <IoNotificationsCircle /> },
+
     { title: 'Profile', path: '/profile', src: <CgProfile /> },
     { title: 'Signin', path: '/login', src: <SiOpenaccess />, gap: 'true' },
   ]

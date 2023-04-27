@@ -1,16 +1,32 @@
 import { DatePicker, Image, Radio, Upload } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
-import React, { useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import dayjs from 'dayjs';
 
 const EditTutor = () => {
   const { state } = useLocation();
+
+  const naviage = useNavigate();
   console.log(state.value);
+  const dateFormat = "YYYY-MM-DD'T'HH:mm:ss.SSSz";
+
+  const dateFormat2 = 'DD-MM-YYYY';
+
+  const dateFormatX = 'DD-MM-YYYY';
+
+  useEffect(()=>{
+
+   // setImageUrl(state.value.avatar)
+
+  });
 
 
+  var options = { year: "numeric", month: "2-digit", day: "2-digit" };
   const [imageUrl, setImageUrl] = useState(state.value.avatar);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [id, setId] = useState(state.value.id);
 
   const [name, setName] = useState(state.value.name);
   const [email, setEmail] = useState(state.value.email);
@@ -21,7 +37,7 @@ const EditTutor = () => {
   const [gender, setGender] = useState(true);
   const [graduated, setGraduated] = useState(true);
   const [experiences, setExperiences] = useState(state.value.experiences);
-  const [birthday, setBirthday] = useState(state.value.birthDay);
+  const [birthday, setBirthday] = useState(new Date(state.value.birthDay).toLocaleDateString('en-US', options));
   const [currentJob, setCurrentJob] = useState(state.value.currentJob);
 
   const handleChangeEmail = (e) => {
@@ -52,9 +68,9 @@ const EditTutor = () => {
   };
 
   const onChangeBirthDay = (date, dateString) => {
-    console.log(date, dateString);
+    var dateFix = new Date(dateString); 
 
-    setBirthday(dateString);
+    setBirthday(dateFix);
   };
 
   const onChangeCurrentJob = (e) => {
@@ -87,11 +103,12 @@ const EditTutor = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const tutorData = {
+      id: id,
       name: name,
       address: address,
       phone: phone,
       gender: gender,
-      birthDay: "2020-10-01T15:06:16Z",
+      birthDay: new Date(birthday),
       email: email,
       experiences: experiences,
       currentJob: currentJob,
@@ -110,7 +127,7 @@ const EditTutor = () => {
       .then((response) => {
         console.log(response.status, response.data);
 
-        Navigate("/tutor")
+        naviage("/tutor")
       });
   };
 
@@ -134,10 +151,10 @@ const EditTutor = () => {
       <input
         type="file"
         name="myImage"
-        onChange={(event) => {
+        onChange={async (event) => {
           // console.log(event.target.files[0]);
           setSelectedImage(event.target.files[0]);
-          if (selectedImage !== null) {
+          if (event.target.files[0] !== null) {
             let formData = new FormData();
             const config = {
               headers: {
@@ -147,12 +164,12 @@ const EditTutor = () => {
             formData.append('file', event.target.files[0]);
             // the image field name should be similar to your api endpoint field name
             // in my case here the field name is customFile
-            axios.post(
+          await  axios.post(
               "http://localhost:8080/api/v1/FileUpload",
               formData, config
             )
               .then(res => {
-                console.log(`Success` + res.data.data);
+                console.log(`Success=` + res.data.data);
                 setImageUrl(res.data.data);
               })
               .catch(err => {
@@ -219,9 +236,9 @@ const EditTutor = () => {
       </Radio.Group>
       <br />
       <br />
-      {/* <DatePicker defaultValue={dayjs('2015/01/01', dateFormat) }
-        placeholder="BirthDay" format={dateFormat}  />
-      <br /> */}
+      <DatePicker defaultValue={dayjs(birthday, dateFormatX)} />
+      <br />
+      <br />
       <TextArea defaultValue={state.value.currentJob} rows={4} placeholder="Current Job" maxLength={400} />
       <br />
       <br />
