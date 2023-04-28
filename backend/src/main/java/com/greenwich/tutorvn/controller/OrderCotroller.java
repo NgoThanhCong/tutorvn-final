@@ -7,6 +7,7 @@ import com.greenwich.tutorvn.repository.OrderRepository;
 import com.greenwich.tutorvn.request.RequestOrder;
 import com.greenwich.tutorvn.service.NotificationService;
 import com.greenwich.tutorvn.service.OrderService;
+import com.greenwich.tutorvn.service.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController  // khai bao anotation restcontroller de tao ra 1 class Rest API
-@RequestMapping(path  = "/api/v1/order")  // *tao ra URL cos dang /api/
+@RequestMapping(path  = "/api/course")  // *tao ra URL cos dang /api/
 @CrossOrigin(origins = "http://localhost:3000,http://localhost:3002", maxAge = 3600)
 public class OrderCotroller {
     @Autowired
@@ -25,18 +26,20 @@ public class OrderCotroller {
     @Autowired
     OrderService orderService;
 
-
     @Autowired
     NotificationService notificationService;
 
-    @GetMapping("/getorder")  // *gui yeu cau de lay du lieu
+
+    @Autowired
+    SequenceGeneratorService sequenceGeneratorService;
+    @GetMapping("")  // *gui yeu cau de lay du lieu
     ResponseEntity<ResponseObject> getListOrder()
     {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                 "Success",orderRepository.findAll()) );
     }
 
-    @GetMapping("/getOrderByPage")  // *gui yeu cau de lay du lieu              // *phân trang
+    @GetMapping("/paging")  // *gui yeu cau de lay du lieu              // *phân trang
     ResponseEntity<ResponseObject> getOrderByPage(int pageNum, int pageSize)
     {
         List<Order> listOrder = new ArrayList<>();
@@ -46,14 +49,14 @@ public class OrderCotroller {
     }
 
 
-    @GetMapping("/getOrderByTutor")
+    @GetMapping("/getByTutor")
     ResponseEntity<ResponseObject> getListOrderByTutors()
     {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                 "Success",orderRepository.findAll( )) );
     }
 
-    @PostMapping("/insertorder")  // *gui len server mot du lieu de create/update 1 tai nguyen nao do
+    @PostMapping("/insert")  // *gui len server mot du lieu de create/update 1 tai nguyen nao do
     ResponseEntity<ResponseObject> insert (@RequestBody Order order)  // *@RequestBody dinh nghia 1 doi tuong truyen vao
 
     {
@@ -61,8 +64,10 @@ public class OrderCotroller {
         order.setDelete(false);
         order.setActive(true);
         System.out.println("insertorder");
+
+        order.setId(sequenceGeneratorService.generateSequence(order.SEQUENCE_NAME));
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
-                "Success",orderRepository.save(order)));   // *.save(tutor) luu yeu cau va return lai gia tri
+                "Success",orderRepository.insert(order)));   // *.save(tutor) luu yeu cau va return lai gia tri
     }
 
     @PostMapping("/assignTutor")   // *chỉ định một gia sư dạy, không có trong list các gia sư đã yêu cầu
@@ -81,7 +86,7 @@ public class OrderCotroller {
                 "Not implement","" ));
     }
 
-    @PostMapping("/requestOrder") // các yêu cầu nhận lớp của gia sư
+    @PostMapping("/requestTutor") // các yêu cầu nhận lớp của gia sư
     ResponseEntity<ResponseObject> requestOrder (@RequestBody RequestOrder requestOrder)
     {
         Optional<Order> optionalOrder = orderRepository.findById(requestOrder.getIdOrder());
@@ -96,7 +101,7 @@ public class OrderCotroller {
                 "Not implement","" ));
     }
 
-    @PostMapping("/cancleOrder") // * một gia sư hủy yeu cầu nhận lớp, list yeu cau sẽ update
+    @PostMapping("/cancel") // * một gia sư hủy yeu cầu nhận lớp, list yeu cau sẽ update
     ResponseEntity<ResponseObject> cancleOrder (@RequestBody RequestOrder requestOrder)
     {
         Optional<Order> optionalOrder = orderRepository.findById(requestOrder.getIdOrder());

@@ -12,7 +12,7 @@ import axios from "axios";
 
 const Course = () => {
 
-    const baseUrl = "http://localhost:8080/api/v1/order/getorder";
+    const baseUrl = "http://localhost:8080/api/course";
 
     const [courseList, setCourseList] = React.useState([]);
 
@@ -53,6 +53,11 @@ const Course = () => {
             title: 'Grade',
             dataIndex: 'grade',
             key: 'grade',
+        },
+        {
+            title: 'PhoneNumber',
+            dataIndex: 'phoneNumber',
+            key: 'phoneNumber',
         },
           {
             title: 'Address',
@@ -112,6 +117,7 @@ const Course = () => {
         },
     ];
     const columnsCourse = [
+
         {
             title: 'Subject'  ,
             dataIndex: 'subject',
@@ -123,6 +129,13 @@ const Course = () => {
             title: 'Grade',
             dataIndex: 'grade',
             key: 'grade',
+        },
+        {
+
+            //phoneNumber
+            title: 'PhoneNumber',
+            dataIndex: 'phoneNumber',
+            key: 'phoneNumber',
         },
           {
             title: 'Address',

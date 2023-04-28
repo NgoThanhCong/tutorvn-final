@@ -85,6 +85,7 @@ const InsertCourse = () => {
 
   };
 
+  const [listTutor, setListTutor] = useState([]);
   const [listSubject, setListSubject] = useState([]);
   const [listSubjectString, setListSubjectString] = useState([]);
 
@@ -103,109 +104,63 @@ const InsertCourse = () => {
     });
   }, [listSubject]);
 
-
-  // const columns = [
-  //   {
-  //     title: 'Mon',
-  //     dataIndex: 'mon',
-  //     key: 'mon',
-  //   },
-  //   {
-  //     title: 'Tue',
-  //     dataIndex: 'tue',
-  //     key: 'tue',
-  //   },
-  //   {
-  //     title: 'Wed',
-  //     dataIndex: 'wed',
-  //     key: 'wed',
-  //   },
-  //   {
-  //     title: 'Thu',
-  //     dataIndex: 'thu',
-  //     key: 'thu',
-  //   },
-  //   {
-  //     title: 'Fri',
-  //     dataIndex: 'fri',
-  //     key: 'fri',
-  //   },
-  //   {
-  //     title: 'Sat',
-  //     dataIndex: 'sat',
-  //     key: 'sat',
-  //   },
-  //   {
-  //     title: 'Sun',
-  //     dataIndex: 'sun',
-  //     key: 'sun',
-  //   },
-  // ];
-
   const navigateCourse = useNavigate();
   const onChangeCheckbox = (checkedValues) => {
     console.log('checked = ', checkedValues);
   };
 
+//   React.useEffect(() => {
+//     axios.get(baseUrl).then((response) => {
+//         console.log(response);
+//         setCourseList(response.data.data);
+//     });
+// }, []);
 
+const baseUrlTUtorList = "http://localhost:8080/api/v1/tutor/getAll";
+
+const [tutorList, setTutorList] = React.useState([]);
+React.useEffect(() => {
+  axios.get(baseUrlTUtorList).then((response) => {
+      setTutorList(response.data.data);
+  });
+}, []);
+const getTutorList = () => {
+    axios.get(baseUrlTUtorList).then((response) => {
+        setTutorList(response.data.data);
+    });
+}
   const columnsCourse = [
     {
       title: 'ID',
-      dataIndex: 'id',
       key: 'id',
-      render: (text) => <a>{text}</a>,
-    },
-    {
+      dataIndex: 'id',
+  },
+  {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
       render: (text) => <a>{text}</a>,
-    },
-    {
-      title: 'Gender',
-      dataIndex: 'gender',
-      key: 'gender',
-    },
-    {
-      title: 'Phone Number',
-      dataIndex: 'phoneNumber',
-      key: 'phoneNumber',
-    },
-    {
+  },
+  {
+      title: 'University',
+      dataIndex: 'university',
+      key: 'university',
+  },
+  {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
-    },
-    {
-      title: 'Status',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (_, record) => (
-        <Space size="middle">
-          <a>Add </a>
-
-        </Space>
-      ),
-    },
+  },
+  {
+      title: 'Experiences',
+      key: 'experiences',
+      dataIndex: 'experiences',
+  },
+  {
+      title: 'Phone',
+      key: 'phone',
+      dataIndex: 'phone',
+  },
   ];
 
   const data = [
@@ -278,15 +233,15 @@ const InsertCourse = () => {
         </div>
       </div>
       <Card
-        title="Information of customer"
+        title="Information of tutor"
         bordered={false}
       >
         <>
           <Button onClick={() => setOpen(true)}>
-            + Add customer in list
+            + Assign Tutor to Course
           </Button>
           <Modal
-            title="List Customer"
+            title="List Tutors"
             centered
             open={open}
             onOk={() => setOpen(false)}
@@ -340,7 +295,7 @@ const InsertCourse = () => {
                             ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
                             focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
                             focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                      Add New Customer
+                      Assign Tutor
                     </button>
                   </div>
                 </div>
@@ -352,7 +307,7 @@ const InsertCourse = () => {
                           navigateCourse("/course/detail")  // dieu huong
                         }, // click row
                       };
-                    }} columns={columnsCourse} dataSource={data} />
+                    }} columns={columnsCourse} dataSource={tutorList} />
                   </div>
                 </div>
               </div>

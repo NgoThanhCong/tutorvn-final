@@ -65,6 +65,7 @@ public class NotificationService {
         return notificationRepository.findAll();
     }
 
+
     public List<Notification> findByIdReceivedID(long id){
         return notificationRepository.findAllByReceivedID(id);
     }

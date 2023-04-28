@@ -33,10 +33,10 @@ const InsertNotification = () => {
   const onChange = (e) => {
     console.log('radio checked', e.target.value);
     if (e.target.value === 1) {
-      setGender(true);
+    //  setGender(true);
     }
     else {
-      setGender(false);
+     // setGender(false);
     }
 
   };
@@ -44,10 +44,10 @@ const InsertNotification = () => {
   const onChangeGraduated = (e) => {
     console.log('radio checked', e.target.value);
     if (e.target.value === 1) {
-      setGraduated(true);
+     // setGraduated(true);
     }
     else {
-      setGraduated(false);
+    //  setGraduated(false);
     }
 
   };
@@ -56,34 +56,36 @@ const InsertNotification = () => {
     console.log(date, dateString);
     var dateFix = new Date(dateString); 
 
-    setBirthday(dateFix);
+   // setBirthday(dateFix);
   };
 
-  const onChangeCurrentJob = (e) => {
+  const onChangeTitle = (e) => {
     e.preventDefault();
     const value = e.target.value;
     console.log(value);
-    setCurrentJob(value);
+    setTitle(value);
+   // setCurrentJob(value);
   };
 
   const onChangeName = (e) => {
     e.preventDefault();
     const value = e.target.value;
     console.log(value);
-    setName(value);
+   // setName(value);
   };
   const onChangeEmail = (e) => {
     e.preventDefault();
     const value = e.target.value;
     console.log(value);
-    setEmail(value);
+    //setEmail(value);
   };
 
-  const onChangeExperiences = (e) => {
+  const onChangeContent = (e) => {
     e.preventDefault();
     const value = e.target.value;
     console.log(value);
-    setExperiences(value);
+    setContent(value);
+   // setExperiences(value);
   };
 
 //   "id":1,
@@ -97,7 +99,7 @@ const InsertNotification = () => {
     e.preventDefault();
     const notification = {
       title: title,
-      content: address,
+      content: content,
       receivedID: 2,
       senderID: 1,
       priority: 1 ,
@@ -108,7 +110,7 @@ const InsertNotification = () => {
     axios.defaults.baseURL = 'http://localhost:8080';
     axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-    axios.post("http://localhost:8080/api/v1/tutor/insert", notification)
+    axios.post("http://localhost:8080/api/notification/insert", notification)
       .then((response) => {
         console.log(response.status, response.data);
         navigate("/notification")
@@ -128,7 +130,7 @@ const InsertNotification = () => {
 
       <TextArea placeholder="Email" autoSize onChange={(e) => {
         e.preventDefault();
-        setEmail(e.target.value)
+        //setEmail(e.target.value)
       }} />
       <br />
       <br />
@@ -141,11 +143,11 @@ const InsertNotification = () => {
       <br />
      
     
-      <TextArea rows={4} placeholder="Title" autoSize onChange={onChangeCurrentJob} />
+      <TextArea rows={4} placeholder="Title" autoSize onChange={onChangeTitle} />
       <br />
       <br />
 
-      <TextArea rows={4} placeholder="Description notification" maxLength={400} onChange={onChangeExperiences} />
+      <TextArea rows={4} placeholder="Description notification" maxLength={400} onChange={onChangeContent} />
       <br />
 
       <br />

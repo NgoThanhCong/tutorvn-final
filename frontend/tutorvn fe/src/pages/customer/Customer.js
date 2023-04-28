@@ -1,28 +1,58 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable no-unused-vars */
+
 import React from "react";
 import { Button, Modal, Table } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Space, Tag } from 'antd';
 import { useState } from 'react';
+
 import { useNavigate } from "react-router-dom"
-
-
-
+import axios from "axios";
+//import Customer from './Customer';
 
 
 const Customer = () => {
-    const navigate = useNavigate();
-    const navigateEditCustomer = () => {
-        navigateEditCustomer("/customer/edit");
+
+    const baseUrl = "http://localhost:8080/api/customer/findAll";
+
+    const [customerList, setCustomerList] = React.useState([]);
+
+    const getCustomerList = () => {
+        axios.get(baseUrl).then((response) => {
+            setCustomerList(response.data.data);
+        });
     }
-    const navigateCustomer = useNavigate();
-    const columnsCustomer = [
+    React.useEffect(() => {
+        axios.get(baseUrl).then((response) => {
+            setCustomerList(response.data.data);
+        });
+    }, []);
+    const onDeleteTutor = async () => {
+        await axios.get("http://localhost:8080/api/customer/delete/" + customerList[index].id).then
+            ((response) => {
+                setIndex(-1);
+              //  getTutorList();
+                setOpen(false);                
+            });
+    }
+    const [open, setOpen] = useState(false);
+    const showModalDelete = () => {
+        setOpen(true);
+    };
+    const hideModal = () => {
+        setOpen(false);
+    };
+    const navigate = useNavigate();
+    const navigateEditTutor = (index) => {
+    const value = customerList.at(index);
+    console.log(value)
+        navigate('/customer/edit',{
+            state: {value}
+        })}
+    const columns = [
         {
             title: 'ID',
-            dataIndex: 'id',
             key: 'id',
-            render: (text) => <a>{text}</a>,
+            dataIndex: 'id',
         },
         {
             title: 'Name',
@@ -31,14 +61,9 @@ const Customer = () => {
             render: (text) => <a>{text}</a>,
         },
         {
-            title: 'Gender',
-            dataIndex: 'gender',
-            key: 'gender',
-        },
-        {
-            title: 'Phone Number',
-            dataIndex: 'phoneNumber',
-            key: 'phoneNumber',
+            title: 'Phone',
+            dataIndex: 'phone',
+            key: 'phone',
         },
         {
             title: 'Address',
@@ -46,73 +71,66 @@ const Customer = () => {
             key: 'address',
         },
         {
-            title: 'Status',
-            key: 'tags',
-            dataIndex: 'tags',
-            render: (_, { tags }) => (
-                <>
-                    {tags.map((tag) => {
-                        let color = tag.length > 5 ? 'geekblue' : 'green';
-                        if (tag === 'loser') {
-                            color = 'volcano';
-                        }
-                        return (
-                            <Tag color={color} key={tag}>
-                                {tag.toUpperCase()}
-                            </Tag>
-                        );
-                    })}
-                </>
-            ),
+            title: 'District',
+            dataIndex: 'district',
+            key: 'district',
+        },
+        {
+            title: 'Province',
+            dataIndex: 'province',
+            key: 'province',
         },
         {
             title: 'Action',
             key: 'action',
-            render: (_, record) => (
+            render: (index, record) => (
                 <Space size="middle">
-                    <a>Course </a>
-                    <a>Edit </a>
-                    <a>Delete </a>
+                    <a onClick={() => navigateEditTutor(index)}>Edit</a>
+                    {/* navigate("/tutor/edit") */}
+                    <a onClick={ showModalDelete}>Delete</a>
+                    <>
+                        <Modal
+                            title=""
+                            open={open}
+                            onOk={() => onDeleteTutor()}
+                            onCancel={hideModal}
+                            okText="YES"
+                            cancelText="NO"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 -m-1 flex items-center text-red-500 mx-auto"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 flex items-center text-red-500 mx-auto"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                            <h2 class="text-xl font-bold py-4 ">Are you sure you want to delete this notification?</h2>
 
-
+                        </Modal>
+                    </>
                 </Space>
             ),
         },
     ];
-    const data = [
-        {
-            id: "1698",
-            name: 'John Brown',
-            gender: 'male',
-            phoneNumber: '0968996589',
-            address: 'New York No. 1 Lake Parkt',
-            tags: ['nice', 'developer'],
-        },
-        {
-            id: "1698",
-            name: 'Jim Green',
-            gender: 'male',
-            phoneNumber: '0968996589',
-            address: 'London No. 1 Lake Park',
-            tags: ['loser'],
-        },
-        {
-            id: "1698",
-            name: 'Joe Black',
-            gender: 'male',
-            phoneNumber: '0968996589',
-            address: 'Sydney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-        },
-    ];
-
+   
+    const [isAddTutor, setIsAddTutor] = useState(false);
+    const [index, setIndex] = useState(-1);
+    const showModal = () => {
+        setIsAddTutor(true);
+    };
+    const handleOk = () => {
+        setIsAddTutor(false);
+    };
+    const handleCancel = () => {
+        setIsAddTutor(false);
+    };
 
     return <body class="antialiased font-sans bg-gray-200">
-
         <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
                 <div>
-                    <h2 class="text-2xl font-semibold leading-tight">Customer</h2>
+                    <h2 class="text-2xl font-semibold leading-tight">List Tutor</h2>
                 </div>
                 <div class="my-2 flex sm:flex-row flex-col">
                     <div class="flex flex-row mb-1 sm:mb-0">
@@ -133,7 +151,7 @@ const Customer = () => {
                         <div class="relative">
                             <select
                                 class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                                <option>All</option>
+                                <option>All000</option>
                                 <option>Active</option>
                                 <option>Inactive</option>
                             </select>
@@ -158,35 +176,33 @@ const Customer = () => {
                     </div>
                     <div class="w-full flex justify-end space-x-2">   {/**/}
                         <button icon={<PlusOutlined />} onClick={
-
                             () => { navigate("/customer/insert") }
                         }
                             type="button"
-                            class="inline-block rounded  bg-red-500 px-6 pt-2.5 pb-2 text-xs font-medium
-                             uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150
-                            ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-                            focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-                            focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                            Insert Customer
-
+                            class="inline-block rounded  bg-red-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
+                             Add Customer
                         </button>
                     </div>
                 </div>
                 <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                     <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                        <Table onRow={(record, rowIndex) => {
+                        <Table pagination={{
+                            pageSize: 30,
+                            defaultPageSize: 30
+                        }} onRow={(record, rowIndex) => {
                             return {
                                 onClick: event => {
-                                    navigateCustomer("/customer/edit")  // dieu huong
+                                    console.log("row click" + rowIndex);
+                                    setIndex(rowIndex);
+                                    navigateEditTutor(rowIndex)
                                 }, // click row
                             };
-                        }} columns={columnsCustomer} dataSource={data} />
+                        }} columns={columns} dataSource={customerList} />
 
                     </div>
                 </div>
             </div>
         </div>
-
     </body>
 };
 

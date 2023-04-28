@@ -1,66 +1,77 @@
 package com.greenwich.tutorvn.model;
 
-import com.fasterxml.jackson.databind.DatabindException;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Document
 public class Order {
     // Order luu tru thong tin cua 1 don hang -= Co nghia la khi khach hang la Phu huynh goi dien den va yeu cau lop gia su thi chung ta tao 1 Order
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)   // Khai bao khoa chinh tu dong tang 1,2,3,4,....
     private Long id;
+
+    @Transient
+    public static final String SEQUENCE_NAME = "course_sequence";
+
     private Long subject_Id;
     private Long customer_ID;
-
     private Long tutor_ID; // ID cua ong nhan lop = Bien nay update khi assign tutor vao day lop
-
-
     private  List<Long> listTutorRequired = new ArrayList<>(); // Nhung tutor y/c nhan lop
-    private int grade;
-    private float timeInLesson;
+    private int grade; // Lop day yeu cau
+    private String studentName; // Ten cua hoc sinh
+    private float timeInLesson; // Thoi gian day 1 buoi
     private boolean gender; // gioi tinh cua hoc sinh
+
+
     private boolean genderRequired;// yeu cau giang vien nam hay nu
     private String phoneNumber; // so dien thoai khach hang
     private int learningMode; // hinh thuc hoc
     private String address; // Dia chi cua hoc sinh
-    private float fee;
+    private float fee; // Hoc phi chi tra
+
     private boolean isActive; // *Xac nhan viec hien thi hay ko len danh sach tutor; // public
     private boolean isDelete; // !xoa khoi danh sach lop hoc trong truong hop du lieu la Rac // xoa han khoi Admin nhung Database van luu tru
     private List<String> learningTime;
-    private Date startDate;
+    private List<LessonDate> lessonDates;
+    private String startDate;
     private Date createdTime;
-
-    public Order(
-            Long subject_Id, Long customer_ID,
-            int grade, float timeInLesson,
-            boolean gender, boolean genderRequired, String phoneNumber,
-            int learningMode, String address, float fee,
-            boolean isActive, boolean isDelete, List<String> learningTime,
-            Date startDate, Date createdTime) {
-        this.subject_Id = subject_Id;
-        this.customer_ID = customer_ID;
-        this.grade = grade;
-        this.timeInLesson = timeInLesson;
-        this.gender = gender;
-        this.genderRequired = genderRequired;
-        this.phoneNumber = phoneNumber;
-        this.learningMode = learningMode;
-        this.address = address;
-        this.fee = fee;
-        this.isActive = isActive;
-        this.isDelete = isDelete;
-        this.learningTime = learningTime;
-        this.startDate = startDate;
-        this.createdTime = createdTime;
-
-        listTutorRequired = new ArrayList<>();
-    }
+//    public Order(
+//            Long subject_Id, Long customer_ID,
+//            int grade, float timeInLesson,
+//            boolean gender, boolean genderRequired, String phoneNumber,
+//            int learningMode, String address, float fee,
+//            boolean isActive, boolean isDelete, List<String> learningTime,
+//            Date startDate, Date createdTime) {
+//        this.subject_Id = subject_Id;
+//        this.customer_ID = customer_ID;
+//        this.grade = grade;
+//        this.timeInLesson = timeInLesson;
+//        this.gender = gender;
+//        this.genderRequired = genderRequired;
+//        this.phoneNumber = phoneNumber;
+//        this.learningMode = learningMode;
+//        this.address = address;
+//        this.fee = fee;
+//        this.isActive = isActive;
+//        this.isDelete = isDelete;
+//        this.learningTime = learningTime;
+//        this.startDate = startDate;
+//        this.createdTime = createdTime;
+//        listTutorRequired = new ArrayList<>();
+//    }
 
     public Long getCustomer_ID() {
         return customer_ID;
@@ -95,13 +106,6 @@ public class Order {
         this.learningTime = learningTime;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
 
     public Date getCreatedTime() {
         return createdTime;
@@ -109,9 +113,6 @@ public class Order {
 
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
-    }
-
-    public Order() {
     }
 
     public Long getId() {

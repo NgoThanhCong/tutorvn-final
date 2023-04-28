@@ -1,7 +1,12 @@
 package com.greenwich.tutorvn.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+
+@Setter
+@Getter
 @Entity
 @Table
 public class Customer {
@@ -11,6 +16,9 @@ public class Customer {
     private String name;
     private String phone;
     private String address;
+    private String district;
+    private  String province;
+
     private boolean isDelete;
 
     public Long getId() {

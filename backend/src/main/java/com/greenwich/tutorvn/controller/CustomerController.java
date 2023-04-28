@@ -3,6 +3,7 @@ import com.greenwich.tutorvn.model.Customer;
 import com.greenwich.tutorvn.model.Order;
 import com.greenwich.tutorvn.model.ResponseObject;
 import com.greenwich.tutorvn.repository.CustomerRepository;
+import com.greenwich.tutorvn.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,25 +14,28 @@ import java.util.List;
 import java.util.Optional;
 // * them customer, list customer, delete by id, search by id// ! xoa bang ten,
 @RestController  // khai bao anotation restcontroller de tao ra 1 class Rest API
-@RequestMapping(path = "/api/v1/customer")
+@RequestMapping(path = "/api/customer")
+@CrossOrigin(origins = "http://localhost:3000,http://localhost:3002", maxAge = 3600)
 public class CustomerController
 {
     @Autowired
     CustomerRepository customerRepository;
-    @PostMapping("insertCustomer")
+    @Autowired
+    CustomerService customerService;
+    @PostMapping("/insert")
     ResponseEntity<ResponseObject> insert (@RequestBody Customer customer)
     {
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",customerRepository.save(customer)));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",customerService.insert(customer)));
     }
 
-    @GetMapping("/listCustomer")
+    @GetMapping("/findAll")
     ResponseEntity<ResponseObject> getListCustomerAll()
     {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
                 "Success",customerRepository.findAll()));
     }
-    @DeleteMapping("/deleteCustomerById/{id}")
+    @DeleteMapping("/delete/{id}")
     void delete (@PathVariable Long id) {customerRepository.deleteById(id);}
 
 //    @GetMapping("/searchCustomerById/{id}")
