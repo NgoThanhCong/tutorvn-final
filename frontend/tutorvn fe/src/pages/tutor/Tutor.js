@@ -85,9 +85,6 @@ const Tutor = () => {
             state: {value}
         })}
 
-
-    //= 
-
     const columns = [
         {
             title: 'ID',
@@ -155,30 +152,7 @@ const Tutor = () => {
             ),
         },
     ];
-    // const data = [
-    //     {
-    //         key: '1',
-    //         name: 'Ngo Thanh Cong',
-    //         age: 32,
-    //         address: 'New York No. 1 Lake Park',
-    //         tags: ['nice', 'developer'],
-    //     },
-    //     {
-    //         key: '2',
-    //         name: 'Jim Green',
-    //         age: 42,
-    //         address: 'London No. 1 Lake Park',
-    //         tags: ['loser'],
-    //     },
-    //     {
-    //         key: '3',
-    //         name: 'Joe Black',
-    //         age: 32,
-    //         address: 'Sydney No. 1 Lake Park',
-    //         tags: ['cool', 'teacher'],
-    //     },
-
-    // ];
+   
     const [isAddTutor, setIsAddTutor] = useState(false);
     const [index, setIndex] = useState(-1);
     const showModal = () => {

@@ -2,25 +2,56 @@ package com.greenwich.tutorvn.model;
 
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "user")  // *dat ten cho bang
-public class User {
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+@Entity
+@Table(name = "user")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id")
     private Long id;
-
-    @Column(nullable = false, unique = true)   // !.
-    private String phone;
-
-    @Column(nullable = false)    // !.
-    private String password;
-
+    @Column(nullable = false, unique = true)
+    private String userName;
+    @Column(nullable = false)
+    private String passWord;
     @Column(nullable = false)
     private String email;
+
+    private Date createdTime;
     private boolean isActive;
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+    public User() {
+    }
+    public User(String userName, String passWord, Date createdTime, boolean isActive) {
+        this.userName = userName;
+        this.passWord = passWord;
+        this.createdTime = createdTime;
+        this.isActive = isActive;
+    }
+
+    public User(String userName, String passWord, String email) {
+        this.userName = userName;
+        this.passWord = passWord;
+        this.email = email;
+    }
+
+    public User(Long id, String userName, String passWord, String email, Date createdTime, boolean isActive) {
+        this.id = id;
+        this.userName = userName;
+        this.passWord = passWord;
+        this.email = email;
+        this.createdTime = createdTime;
+        this.isActive = isActive;
+    }
 
     public Long getId() {
         return id;
@@ -30,28 +61,28 @@ public class User {
         this.id = id;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPassWord() {
+        return passWord;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
     }
 
-    public String getEmail() {
-        return email;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
     public boolean isActive() {
@@ -62,15 +93,19 @@ public class User {
         isActive = active;
     }
 
-    public User(Long id, String phone, String password, String email, boolean isActive) {
-        this.id = id;
-        this.phone = phone;
-        this.password = password;
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
-        this.isActive = isActive;
     }
 
-    public User() {
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
-
 }
