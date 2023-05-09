@@ -29,49 +29,31 @@ import Customer from './pages/customer/Customer'
 import Notification from './pages/notification/Notification'
 import InsertNotification from './pages/notification/InsertNotification'
 
-
-
-
-
-
-
-
 function App() {
     return (
         <BrowserRouter>
-            <Layout>
-                <Routes>
-                    <Route path='/' element={<Home />} />
-                    {/* <Route path='/dashboard' element={<Dashboard />} /> */}
-                
+            <Routes>
+                    <Route path='/' element={<Tutor />} />  
                     <Route path='/profile' element={<Profile />} />
                     <Route path='/login' element={<Login />} />
                     <Route path='/test' element={<Test />} />
-                    
-                    <Route path='/tutor/insert' element={<InsertTutor />} />                   
+                    <Route path='/tutor/insert' element={(<InsertTutor/>) } />                   
                     <Route path='/tutor' element={<Tutor />} />  
                     <Route path='/tutor/edit' element={<EditTutor />} />
                     <Route path='/tutor/list' element={<ListTutor />} />
                     <Route path='/tutor/detail' element={<DetailTutor />} />
-
                     <Route path='/customer' element={<Customer/>} /> 
                     <Route path='/customer/insert' element={<InsertCustomer/>} /> 
                     <Route path='/customer/detail' element={<DetailCustomer/>} />
                     <Route path='/customer/edit' element={<EditCustomer/>} />
-
                     <Route path='/course/detail' element={<DetailCourse />} />
                     <Route path='/course' element={<Course />} />
                     <Route path='/course/insert' element={<InsertCourse />} />
                     <Route path='/course/edit' element={<EditCourse />} />
-                
                     <Route path='/notification' element={<Notification />} />  
-
                     <Route path='/notification/insert' element={<InsertNotification />} />  
                     <Route path='/notification/edit' element={<InsertNotification />} />  
-
-
                 </Routes>
-            </Layout>
         </BrowserRouter>
     )
 }

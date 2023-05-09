@@ -1,8 +1,9 @@
 import Reac from "react";
+import { privateUserRoute } from "../utils/privateRoute";
 
 const Home = () =>
 {
     return <div className='dark:text=white' >Home</div>
 };
 
-export default Home;
+export default privateUserRoute(Home);

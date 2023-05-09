@@ -6,6 +6,7 @@ import axios from 'axios';
 import Course from './Course';
 import { useNavigate } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
+import { privateUserRoute } from '../../utils/privateRoute';
 
 
 
@@ -239,4 +240,4 @@ const DetailCourse = () => {
 
 }
 
-export default DetailCourse;
+export default privateUserRoute(DetailCourse);

@@ -4,6 +4,9 @@ import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { privateUserRoute } from "../../utils/privateRoute";
+import Sidebar from "../../components/Sidebar";
+import Navbar from "../../components/Navbar";
 
 
 
@@ -72,7 +75,12 @@ const EditCustomer = () => {
             });
     };
 
-    return <body class="antialiased font-sans bg-gray-200">
+    return ( <>
+        <div className='flex flex-auto h-screen'>
+            <Sidebar />
+            <div className='grow'>
+                <Navbar />
+                <div className='m-5'> <body class="antialiased font-sans bg-gray-200">
         <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
                 <div>
@@ -147,8 +155,13 @@ const EditCustomer = () => {
             <br />
         </div>
 
-    </body>
+    </body></div>
+            </div>
+        </div>
+    </>)
+    
+   
 
 };
 
-export default EditCustomer;
+export default privateUserRoute(EditCustomer);

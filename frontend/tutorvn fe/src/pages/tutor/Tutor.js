@@ -2,7 +2,7 @@
 /* eslint-disable no-dupe-keys */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Modal, Table } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Space, Tag } from 'antd';
@@ -11,24 +11,59 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
 import ListTutor from "./ListTutor";
+import { privateUserRoute } from "../../utils/privateRoute";
+import Sidebar from "../../components/Sidebar";
+import Navbar from "../../components/Navbar";
+import CallAPI from "../../modules/api/apiWithToken";
 
 
 const Tutor = () => {
+    useEffect(() => {
+        const accessToken = sessionStorage.getItem("accessToken");
+        const role_user = sessionStorage.getItem("role");
+    
+        console.log(role_user);
+        
+      });
 
     const baseUrl = "http://localhost:8080/api/v1/tutor/getAll";
 
     const [tutorList, setTutorList] = React.useState([]);
 
-    const getTutorList = () => {
-        axios.get(baseUrl).then((response) => {
-            setTutorList(response.data.data);
-        });
+    const getTutorList = async () => {
+       
+        const access_token = sessionStorage.getItem("accessToken");
+        axios.get(baseUrl, {
+        headers: {
+            'Authorization': `Bearer ${access_token}`
+        }
+        })
+        .then((res) => {
+        console.log(res.data)
+        setTutorList(res.data.data);
+
+        })
+        .catch((error) => {
+        console.error(error)
+        })
     }
 
     React.useEffect(() => {
-        axios.get(baseUrl).then((response) => {
-            setTutorList(response.data.data);
-        });
+        const access_token = sessionStorage.getItem("accessToken");
+        console.log({"access_token":access_token});
+        axios.get(baseUrl, {
+        headers: {
+            'Authorization': `Bearer ${access_token}`
+        }
+        })
+        .then((res) => {
+        console.log(res.data)
+        setTutorList(res.data.data);
+
+        })
+        .catch((error) => {
+        console.error(error)
+        })
     }, []);
 
     const onDeleteTutor = async () => {
@@ -165,7 +200,14 @@ const Tutor = () => {
         setIsAddTutor(false);
     };
 
-    return <body class="antialiased font-sans bg-gray-200">
+    return (
+    <>
+            <div className='flex flex-auto h-screen'>
+                <Sidebar />
+                <div className='grow'>
+                    <Navbar />
+                    <div className='m-5'>
+                    <body class="antialiased font-sans bg-gray-200">
         <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
                 <div>
@@ -249,6 +291,12 @@ const Tutor = () => {
             </div>
         </div>
     </body>
+
+                    </div>
+                </div>
+            </div>
+        </>
+   )
 };
 
-export default Tutor;
+export default privateUserRoute(Tutor);

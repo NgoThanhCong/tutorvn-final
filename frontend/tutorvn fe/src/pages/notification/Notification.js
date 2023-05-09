@@ -7,6 +7,9 @@ import { useState } from 'react';
 
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
+import { privateUserRoute } from "../../utils/privateRoute";
+import Sidebar from "../../components/Sidebar";
+import Navbar from "../../components/Navbar";
 
 
 const Notification = () => {
@@ -115,7 +118,12 @@ const Notification = () => {
         setIsAddTutor(false);
     };
 
-    return <body class="antialiased font-sans bg-gray-200">
+    return (<>
+        <div className='flex flex-auto h-screen'>
+            <Sidebar />
+            <div className='grow'>
+                <Navbar />
+                <div className='m-5'><body class="antialiased font-sans bg-gray-200">
         <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
                 <div>
@@ -192,7 +200,12 @@ const Notification = () => {
                 </div>
             </div>
         </div>
-    </body>
+    </body></div>
+            </div>
+        </div>
+    </>)
+    
+    
 };
 
-export default Notification;
+export default privateUserRoute(Notification);

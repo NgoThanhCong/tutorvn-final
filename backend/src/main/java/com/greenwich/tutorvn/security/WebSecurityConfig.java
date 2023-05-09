@@ -38,7 +38,6 @@ public class WebSecurityConfig {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
@@ -58,11 +57,18 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
       //  http.authorizeHttpRequests((authz) ->authz.anyRequest().permitAll()).httpBasic(Customizer.withDefaults());
+//        http.cors().and().csrf().disable()
+//                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//                .authorizeRequests().requestMatchers("/api/auth/**").permitAll()
+//                .requestMatchers("/api/test/**").permitAll().anyRequest().authenticated();
+
+
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/test/**").permitAll().anyRequest().authenticated();
+                .authorizeRequests().requestMatchers("/api/auth/**","/api/v1/booking/**","/api/v1/record/**").permitAll()
+                .requestMatchers("/api/test/**").hasAnyRole("ROLE_ADMIN", "ROLE_USER").anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());
 

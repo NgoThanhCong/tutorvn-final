@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
+import { privateUserRoute } from '../utils/privateRoute'
 
 const Layout = ({ children }) => {
     return (
@@ -16,4 +17,4 @@ const Layout = ({ children }) => {
     )
 }
 
-export default Layout
+export default privateUserRoute(Layout);

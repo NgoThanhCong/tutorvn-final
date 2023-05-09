@@ -6,6 +6,9 @@ import axios from 'axios';
 import Course from './Course';
 import { useNavigate } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
+import { privateUserRoute } from '../../utils/privateRoute';
+import Sidebar from '../../components/Sidebar';
+import Navbar from '../../components/Navbar';
 
 
 const InsertCourse = () => {
@@ -225,7 +228,12 @@ const getTutorList = () => {
 
   const [open, setOpen] = useState(false);
   const dateFormat = 'YYYY/MM/DD';
-  return <body class="antialiased font-sans bg-gray-200">
+  return (<>
+    <div className='flex flex-auto h-screen'>
+        <Sidebar />
+        <div className='grow'>
+            <Navbar />
+            <div className='m-5'><body class="antialiased font-sans bg-gray-200">
     <div class="container mx-auto px-4 sm:px-8">
       <div class="py-8">
         <div>
@@ -466,9 +474,14 @@ const getTutorList = () => {
       <br />
     </div>
 
-  </body>
+  </body></div>
+        </div>
+    </div>
+</>)
+  
+  
 
 
 }
 
-export default InsertCourse;
+export default privateUserRoute(InsertCourse);
