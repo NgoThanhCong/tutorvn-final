@@ -14,10 +14,10 @@ const DetailTutor = () => {
      return (<>
       <div className='flex flex-auto h-screen'>
           <Sidebar />
-          <div className='grow'>
+          <div className='grow bg-sky-700'>
               <Navbar />
               <div className='m-5'> <body class="antialiased font-sans bg-gray-200">
-    <div class="container mx-auto px-4 sm:px-8">
+    <div class="bg-sky-700 container mx-auto px-4 sm:px-8">
       <div class="py-8">
         <div>
           <h2 class="text-2xl font-semibold leading-tight">Edit Tutor</h2>

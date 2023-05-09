@@ -8,7 +8,6 @@ import Profile from './pages/Profile'
 import Login from './pages/Login'
 import Test from './pages/Test';
 
-
 import Tutor from './pages/tutor/Tutor'
 import InsertTutor from './pages/tutor/InsertTutor';
 
@@ -17,18 +16,18 @@ import ListTutor from './pages/tutor/ListTutor'
 import DetailTutor from './pages/tutor/DetailTutor'
 
 import Course from './pages/course/Course'
-import InsertCourse from './pages/course/InsertCourse';
+// import InsertCourse from './pages/course/InsertCourse';
 import DetailCourse from './pages/course/DetailCourse'
 import EditCourse from './pages/course/EditCourse'
-
-
+import React from 'react';
 import InsertCustomer from './pages/customer/InsertCustomer'
 import DetailCustomer from './pages/customer/DetailCustomer'
 import EditCustomer from './pages/customer/EditCustomer'
 import Customer from './pages/customer/Customer'
 import Notification from './pages/notification/Notification'
 import InsertNotification from './pages/notification/InsertNotification'
-
+import './index.css';
+//https://flaviocopes.com/axios-send-authorization-header/
 function App() {
     return (
         <BrowserRouter>
@@ -48,7 +47,7 @@ function App() {
                     <Route path='/customer/edit' element={<EditCustomer/>} />
                     <Route path='/course/detail' element={<DetailCourse />} />
                     <Route path='/course' element={<Course />} />
-                    <Route path='/course/insert' element={<InsertCourse />} />
+                    {/* <Route path='/course/insert' element={<InsertCourse />} /> */}
                     <Route path='/course/edit' element={<EditCourse />} />
                     <Route path='/notification' element={<Notification />} />  
                     <Route path='/notification/insert' element={<InsertNotification />} />  

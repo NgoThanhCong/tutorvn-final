@@ -7,7 +7,7 @@ import { SiFuturelearn } from 'react-icons/si'
 import { GrGremlin, GrGroup } from 'react-icons/gr'
 import { SiOpenaccess } from 'react-icons/si'
 import { CgProfile } from 'react-icons/cg'
-import Logo from '../assets/images/logo.svg'
+import Logo from '../assets/images/tutor-logo-white.png'
 import { IconName } from "react-icons/gr";
 import HamburgerButton from './HamburgerMenuButton/HamburgerButton'
 import Tutor from './../pages/tutor/Tutor';
@@ -23,7 +23,7 @@ const Sidebar = () => {
   const Menus = [
     // { title: 'Dashboard', path: '/dashboard', src: <AiFillPieChart /> },
     { title: 'Course', path: '/course', src: <SiFuturelearn /> },
-    { title: 'Tutor', path: '/tutor', src: <GrGroup /> }, // add tutor
+    { title: 'Tutor', path: '/tutor', src: <MdAccountCircle /> }, // add tutor
     
     { title: 'Customer', path: '/customer', src: <MdAccountCircle /> },
     { title: 'Notification', path: '/notification', src: <IoNotificationsCircle /> },
@@ -37,20 +37,20 @@ const Sidebar = () => {
       <div
         className={`${
           open ? 'w-60' : 'w-fit'
-        } hidden sm:block relative h-screen duration-300 bg-gray-100 border-r border-gray-200 dark:border-gray-600 p-5 dark:bg-slate-800`}
+        } hidden sm:block relative h-screen duration-300 bg-sky-700	 border-r border-gray-200 dark:border-gray-600 p-5 dark:bg-slate-800`}
       >
-        <BsArrowLeftCircle
+        {/* <BsArrowLeftCircle
           className={`${
             !open && 'rotate-180'
           } absolute text-3xl bg-white fill-slate-800  rounded-full cursor-pointer top-9 -right-4 dark:fill-gray-400 dark:bg-gray-800`}
-          onClick={() => setOpen(!open)}
-        />
+          onClick={() => setOpen(open)}
+        /> */}
         <Link to='/'>
           <div className={`flex ${open && 'gap-x-4'} items-center`}>
-            <img src={Logo} alt='' className='pl-2' />
+            <img src={Logo} alt='' className='pl-2' width={120} height={120} />
             {open && (
               <span className='text-xl font-medium whitespace-nowrap dark:text-white'>
-                TutorVN
+                {/* TutorVN */}
               </span>
             )}
           </div>
@@ -60,10 +60,10 @@ const Sidebar = () => {
           {Menus.map((menu, index) => (
             <Link to={menu.path} key={index}>
               <li
-                className={`flex items-center gap-x-6 p-3 text-base font-normal rounded-lg cursor-pointer dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700
+                className={`flex text-white items-center gap-x-6 p-3 text-base font-bold rounded-lg cursor-pointer dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700
                         ${menu.gap ? 'mt-9' : 'mt-2'} ${
                   location.pathname === menu.path &&
-                  'bg-gray-200 dark:bg-gray-700'
+                  'bg-gray-200 dark:bg-gray-700 text-black'
                 }`}
               >
                 <span className='text-2xl'>{menu.src}</span>

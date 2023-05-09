@@ -1,13 +1,12 @@
 import { Radio, DatePicker, Upload, Button, label, Card, Select, Space, Modal, Tag, Table, Checkbox, Row, Col, Input } from 'antd';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextArea from 'antd/es/input/TextArea';
 import axios from 'axios';
 import Course from './Course';
 import { useNavigate } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import { privateUserRoute } from '../../utils/privateRoute';
-
 
 
 const DetailCourse = () => {
@@ -168,7 +167,7 @@ const DetailCourse = () => {
   const [open, setOpen] = useState(false);
   const dateFormat = 'YYYY/MM/DD';
   return <body class="antialiased font-sans bg-gray-200">
-    <div class="container mx-auto px-4 sm:px-8">
+    <div class="bg-sky-700  container mx-auto px-4 sm:px-8">
       <div class="py-8">
         <div>
           <h2 class="text-2xl font-semibold leading-tight">Detail Course</h2>

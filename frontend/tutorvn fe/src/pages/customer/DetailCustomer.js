@@ -1,7 +1,7 @@
 import { Radio } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
-import Reac, { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { privateUserRoute } from "../../utils/privateRoute";
 import Sidebar from "../../components/Sidebar";
@@ -70,10 +70,10 @@ const DetailCustomer = () =>
     return ( <>
         <div className='flex flex-auto h-screen'>
             <Sidebar />
-            <div className='grow'>
+            <div className='grow bg-sky-700'>
                 <Navbar />
                 <div className='m-5'><body class="antialiased font-sans bg-gray-200">
-    <div class="container mx-auto px-4 sm:px-8">
+    <div class="bg-sky-700 container mx-auto px-4 sm:px-8">
         <div class="py-8">
             <div>
                 <h2 class="text-2xl font-semibold leading-tight">Detail Customer</h2>

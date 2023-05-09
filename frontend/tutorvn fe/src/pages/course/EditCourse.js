@@ -1,9 +1,9 @@
 import { Radio, DatePicker, Upload, Button, label, Card, Select, Space, Modal, Tag, Table, Checkbox, Row, Col } from 'antd';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextArea from 'antd/es/input/TextArea';
-import axios from 'axios';
-import Course from './Course';
+// import axios from 'axios';
+// import Course from './Course';
 import { useNavigate } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import { privateUserRoute } from '../../utils/privateRoute';
@@ -174,10 +174,10 @@ const EditCourse = () => {
     <>
             <div className='flex flex-auto h-screen'>
                 <Sidebar />
-                <div className='grow'>
+                <div className='grow bg-sky-700'>
                     <Navbar />
                     <div className='m-5'> <body class="antialiased font-sans bg-gray-200">
-    <div class="container mx-auto px-4 sm:px-8">
+    <div class="bg-sky-700 container mx-auto px-4 sm:px-8">
       <div class="py-8">
         <div>
           <h2 class="text-2xl font-semibold leading-tight">Insert Course</h2>
@@ -294,19 +294,19 @@ const EditCourse = () => {
           optionFilterProp="children"
           onChange={onChangeLevel}
           onSearch={onSearchLevel}
-          filterOption={(input, option) =>
-            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-          }
-          options={[
-            {
-              value: 'Student',
-              label: 'Student ',
-            },
-            {
-              value: 'Teacher',
-              label: 'Teacher ',
-            },
-          ]}
+          // filterOption={(input, option) =>
+          //   (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+          // }
+          // options={[
+          //   {
+          //     value: 'Student',
+          //     label: 'Student ',
+          //   },
+          //   {
+          //     value: 'Teacher',
+          //     label: 'Teacher ',
+          //   },
+          // ]}
         />
         <br />
         <br />
@@ -361,60 +361,60 @@ const EditCourse = () => {
           optionFilterProp="children"
           onChange={onChange}
           onSearch={onSearch}
-          filterOption={(input, option) =>
-            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-          }
-          options={[
-            {
-              value: 'grade 1',
-              label: 'Grade 1',
-            },
-            {
-              value: 'grade 2',
-              label: 'Grade 2',
-            },
-            {
-              value: 'grade 3',
-              label: 'Grade 3',
-            },
-            {
-              value: 'grade 4',
-              label: 'Grade 4',
-            },
-            {
-              value: 'grade 5',
-              label: 'Grade 5',
-            },
-            {
-              value: 'grade 6',
-              label: 'Grade 6',
-            },
-            {
-              value: 'grade 7',
-              label: 'Grade 7',
-            },
-            {
-              value: 'grade 8',
-              label: 'Grade 8',
-            },
-            {
-              value: 'grade 9',
-              label: 'Grade 9',
-            },
-            {
-              value: 'grade 10',
-              label: 'Grade 10',
-            },
-            {
-              value: 'grade 11',
-              label: 'Grade 11',
-            },
-            {
-              value: 'grade 12',
-              label: 'Grade 12',
-            },
+          // filterOption={(input, option) =>
+          //   (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+          // }
+          // options={[
+          //   {
+          //     value: 'grade 1',
+          //     label: 'Grade 1',
+          //   },
+          //   {
+          //     value: 'grade 2',
+          //     label: 'Grade 2',
+          //   },
+          //   {
+          //     value: 'grade 3',
+          //     label: 'Grade 3',
+          //   },
+          //   {
+          //     value: 'grade 4',
+          //     label: 'Grade 4',
+          //   },
+          //   {
+          //     value: 'grade 5',
+          //     label: 'Grade 5',
+          //   },
+          //   {
+          //     value: 'grade 6',
+          //     label: 'Grade 6',
+          //   },
+          //   {
+          //     value: 'grade 7',
+          //     label: 'Grade 7',
+          //   },
+          //   {
+          //     value: 'grade 8',
+          //     label: 'Grade 8',
+          //   },
+          //   {
+          //     value: 'grade 9',
+          //     label: 'Grade 9',
+          //   },
+          //   {
+          //     value: 'grade 10',
+          //     label: 'Grade 10',
+          //   },
+          //   {
+          //     value: 'grade 11',
+          //     label: 'Grade 11',
+          //   },
+          //   {
+          //     value: 'grade 12',
+          //     label: 'Grade 12',
+          //   },
 
-          ]}
+          // ]}
         />
         <br />
         <br />
@@ -450,35 +450,35 @@ const EditCourse = () => {
           optionFilterProp="children"
           onChange={onChangeTime}
           onSearch={onSearchTime}
-          filterOption={(input, option) =>
-            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-          }
-          options={[
-            {
-              value: '30 minute',
-              label: '30 minute ',
-            },
-            {
-              value: '1 hour',
-              label: '1 hour ',
-            },
-            {
-              value: '1 hour 30 minute',
-              label: '1 hour 30 minute ',
-            },
-            {
-              value: '2 hour',
-              label: '2 hour ',
-            },
-            {
-              value: '2 hour 30 minute',
-              label: '2 hour 30 minute ',
-            },
-            {
-              value: '3 hour',
-              label: '3 hour ',
-            },
-          ]}
+          // filterOption={(input, option) =>
+          //   (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+          // }
+          // options={[
+          //   {
+          //     value: '30 minute',
+          //     label: '30 minute ',
+          //   },
+          //   {
+          //     value: '1 hour',
+          //     label: '1 hour ',
+          //   },
+          //   {
+          //     value: '1 hour 30 minute',
+          //     label: '1 hour 30 minute ',
+          //   },
+          //   {
+          //     value: '2 hour',
+          //     label: '2 hour ',
+          //   },
+          //   {
+          //     value: '2 hour 30 minute',
+          //     label: '2 hour 30 minute ',
+          //   },
+          //   {
+          //     value: '3 hour',
+          //     label: '3 hour ',
+          //   },
+          // ]}
         />
         <br />
         <label>Start day</label>

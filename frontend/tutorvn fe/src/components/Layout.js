@@ -6,7 +6,7 @@ import { privateUserRoute } from '../utils/privateRoute'
 const Layout = ({ children }) => {
     return (
         <>
-            <div className='flex flex-auto h-screen'>
+            <div className='flex flex-auto h-screen bg-orange-400'>
                 <Sidebar />
                 <div className='grow'>
                     <Navbar />
