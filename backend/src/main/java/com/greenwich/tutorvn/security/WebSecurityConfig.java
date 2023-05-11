@@ -67,7 +67,7 @@ public class WebSecurityConfig {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().requestMatchers("/api/auth/**","/api/v1/booking/**","/api/v1/record/**").permitAll()
+                .authorizeRequests().requestMatchers("/api/auth/**","/api/v1/booking/**","/api/v1/record/**","/api/v1/FileUpload/files/**").permitAll()
                 .requestMatchers("/api/test/**").hasAnyRole("ROLE_ADMIN", "ROLE_USER").anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());

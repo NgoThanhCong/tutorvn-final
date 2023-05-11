@@ -120,7 +120,7 @@ const InsertNotification = () => {
 
   return (
     <>
-      <div className="flex flex-auto h-screen">
+      <div className="flex flex-auto">
         <Sidebar />
         <div className="grow bg-sky-700">
           <Navbar />
@@ -129,11 +129,15 @@ const InsertNotification = () => {
               <div class="bg-sky-700 container mx-auto px-4 sm:px-8">
                 <div class="py-8">
                   <div>
-                    <h2 class="text-2xl font-semibold leading-tight">
+                    <h2 class="text-2xl font-semibold text-white leading-tight">
                       Insert Notification
                     </h2>
                   </div>
                 </div>
+
+
+                <div className="w-1/2">
+
 
                 <TextArea
                   placeholder="Email"
@@ -179,6 +183,7 @@ const InsertNotification = () => {
                 <br />
                 <br />
 
+</div>
                 <div class="w-full flex justify-start space-x-2">
                   <button
                     onClick={handleSubmit}

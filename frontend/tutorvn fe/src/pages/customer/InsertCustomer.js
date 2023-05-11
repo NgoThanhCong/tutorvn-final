@@ -71,7 +71,7 @@ const InsertCustomer = () => {
     };
 
     return (<>
-        <div className='flex flex-auto h-screen'>
+        <div className='flex flex-auto'>
             <Sidebar />
             <div className='grow bg-sky-700'>
                 <Navbar />

@@ -8,7 +8,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Space, Tag } from 'antd';
 import { useState } from 'react';
 
-import { useNavigate } from "react-router-dom"
+import { redirect, useNavigate } from "react-router-dom"
 import axios from "axios";
 import ListTutor from "./ListTutor";
 import { privateUserRoute } from "../../utils/privateRoute";
@@ -21,10 +21,11 @@ const Tutor = () => {
     useEffect(() => {
         const accessToken = sessionStorage.getItem("accessToken");
         const role_user = sessionStorage.getItem("role");
-    
         console.log(role_user);
-        
-      });
+        if (!accessToken) {
+          redirect("/login");
+        }
+      },[]);
 
     const baseUrl = "http://localhost:8080/api/v1/tutor/getAll";
 
@@ -208,58 +209,58 @@ const Tutor = () => {
                     <Navbar />
                     <div className='m-5'>
                     <body class="antialiased font-sans">
-        <div class="container mx-auto px-4 sm:px-8 bg-sky-700 ">
-            <div class="py-8">
-                <div>
-                    <h2 class="text-2xl text-white font-semibold leading-tight">List Tutor</h2>
-                </div>
-                <div class="my-4 flex sm:flex-row flex-col">
-                    <div class=" relative">
-                        <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
-                            <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
-                                <path
-                                    d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
-                                </path>
-                            </svg>
-                        </span>
-                        <input placeholder="Search"
-                            class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
-                    </div>
-                    <div class="w-full flex justify-end space-x-2">   {/**/}
-                        <button icon={<PlusOutlined />} onClick={
+                        <div class="container mx-auto px-4 sm:px-8 bg-sky-700 ">
+                            <div class="py-8">
+                                <div>
+                                    <h2 class="text-2xl text-white font-semibold leading-tight">List Tutor</h2>
+                                </div>
+                                <div class="my-4 flex sm:flex-row flex-col">
+                                    <div class=" relative">
+                                        <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+                                            <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
+                                                <path
+                                                    d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
+                                                </path>
+                                            </svg>
+                                        </span>
+                                        <input placeholder="Search"
+                                            class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                                    </div>
+                                    <div class="w-full flex justify-end space-x-2">   {/**/}
+                                        <button icon={<PlusOutlined />} onClick={
 
-                            () => { navigate("/tutor/insert") }
-                        }
-                            type="button"
-                            class="inline-block rounded  bg-red-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                            Add Tutor
+                                            () => { navigate("/tutor/insert") }
+                                        }
+                                            type="button"
+                                            class="inline-block rounded  bg-red-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
+                                            Add Tutor
 
-                        </button>
-                    </div>
-                </div>
-                <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                    <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                        <Table pagination={{
-                            // pageSizeOptions: ["5", "10", "15", "15"],
-                            pageSize: 30,
-                            // showSizeChanger: true,
-                            defaultPageSize: 30
-                        }} onRow={(record, rowIndex) => {
-                            return {
-                                onClick: event => {
-                                    console.log("row click" + rowIndex);
-                                    setIndex(rowIndex);
-                                    navigateEditTutor(rowIndex)
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                                    <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                                        <Table pagination={{
+                                            // pageSizeOptions: ["5", "10", "15", "15"],
+                                            pageSize: 30,
+                                            // showSizeChanger: true,
+                                            defaultPageSize: 30
+                                        }} onRow={(record, rowIndex) => {
+                                            return {
+                                                onClick: event => {
+                                                    console.log("row click" + rowIndex);
+                                                    setIndex(rowIndex);
+                                                    navigateEditTutor(rowIndex)
 
-                                    //navigate("/tutor/detail")  // dieu huong
-                                }, // click row
-                            };
-                        }} columns={columns} dataSource={tutorList} />
+                                                    //navigate("/tutor/detail")  // dieu huong
+                                                }, // click row
+                                            };
+                                        }} columns={columns} dataSource={tutorList} />
 
-                    </div>
-                </div>
-            </div>
-        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
     </body>
 
                     </div>
@@ -269,4 +270,4 @@ const Tutor = () => {
    )
 };
 
-export default privateUserRoute(Tutor);
+export default (Tutor);

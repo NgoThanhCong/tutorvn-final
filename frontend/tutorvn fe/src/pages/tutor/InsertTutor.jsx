@@ -137,7 +137,7 @@ const InsertTutor = () => {
 
 
   return (<>
-    <div className='flex flex-auto h-screen'>
+    <div className='flex flex-auto'>
         <Sidebar />
         <div className='grow bg-sky-700'>
             <Navbar />
@@ -145,7 +145,7 @@ const InsertTutor = () => {
     <div class="bg-sky-700 container mx-auto px-4 sm:px-8">
       <div class="py-8">
         <div>
-          <h2 class="text-2xl font-semibold leading-tight">Insert tutor</h2>
+          <h2 class="text-2xl text-white font-semibold leading-tight">Insert tutor</h2>
         </div>
       </div>
       <Image
@@ -164,9 +164,12 @@ const InsertTutor = () => {
           setSelectedImage(event.target.files[0]);
           if (event.target.files[0] !== null) {
             let formData = new FormData();
+            const accessToken = sessionStorage.getItem("accessToken");
             const config = {
               headers: {
-                'content-type': 'multipart/form-data'
+                'content-type': 'multipart/form-data',
+                'Authorization': `Bearer ${accessToken}`
+
               }
             }
             formData.append('file', event.target.files[0]);
@@ -191,7 +194,7 @@ const InsertTutor = () => {
 
       <br />
       <br />
-
+      <div className="w-1/2">
 
       <TextArea placeholder="FullName" autoSize onChange={(e) => {
         e.preventDefault();
@@ -256,7 +259,7 @@ const InsertTutor = () => {
       {/* <TextArea placeholder="Subject" autoSize /> */}
       <br />
       <br />
-
+</div>
       <div class="w-full flex justify-start space-x-2">
         <button onClick=
           {
@@ -273,11 +276,7 @@ const InsertTutor = () => {
 
           Insert Tutor
         </button>
-        {/* <button
-                            type="button"
-                            class="inline-block rounded  bg-red-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                            Add Tutor2
-                        </button> */}
+       
       </div>
 
       <br />

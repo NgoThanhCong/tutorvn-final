@@ -16,7 +16,7 @@ import ListTutor from './pages/tutor/ListTutor'
 import DetailTutor from './pages/tutor/DetailTutor'
 
 import Course from './pages/course/Course'
-// import InsertCourse from './pages/course/InsertCourse';
+import InsertCourse from './pages/course/InsertCourse';
 import DetailCourse from './pages/course/DetailCourse'
 import EditCourse from './pages/course/EditCourse'
 import React from 'react';
@@ -27,6 +27,7 @@ import Customer from './pages/customer/Customer'
 import Notification from './pages/notification/Notification'
 import InsertNotification from './pages/notification/InsertNotification'
 import './index.css';
+import ChangePassword from './pages/ChangePassword'
 //https://flaviocopes.com/axios-send-authorization-header/
 function App() {
     return (
@@ -34,6 +35,8 @@ function App() {
             <Routes>
                     <Route path='/' element={<Tutor />} />  
                     <Route path='/profile' element={<Profile />} />
+                    <Route path='/update-password' element={<ChangePassword />} />
+
                     <Route path='/login' element={<Login />} />
                     <Route path='/test' element={<Test />} />
                     <Route path='/tutor/insert' element={(<InsertTutor/>) } />                   
@@ -47,7 +50,7 @@ function App() {
                     <Route path='/customer/edit' element={<EditCustomer/>} />
                     <Route path='/course/detail' element={<DetailCourse />} />
                     <Route path='/course' element={<Course />} />
-                    {/* <Route path='/course/insert' element={<InsertCourse />} /> */}
+                    <Route path='/course/insert' element={<InsertCourse />} />
                     <Route path='/course/edit' element={<EditCourse />} />
                     <Route path='/notification' element={<Notification />} />  
                     <Route path='/notification/insert' element={<InsertNotification />} />  

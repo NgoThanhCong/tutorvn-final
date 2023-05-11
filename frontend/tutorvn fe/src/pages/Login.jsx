@@ -8,21 +8,20 @@ const Login = () => {
   useEffect(() => {
     const accessToken = sessionStorage.getItem("accessToken");
     const role_user = sessionStorage.getItem("role");
-    // const navigate = useNavigate();
-
+   // const navigate = useNavigate();
     console.log(role_user);
     if (accessToken) {
       redirect("/tutor");
     }
   },[]);
-
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginCall = async () => {
+  function loginCall() {
     const bodyData = { username: username, password: password };
     console.log(bodyData);
-    await axios
+    axios
       .post("http://localhost:8080/api/auth/signin", {
         username: username,
         password: password,
@@ -34,34 +33,18 @@ const Login = () => {
         sessionStorage.setItem("email", response.data.email);
         sessionStorage.setItem("id", response.data.id);
         sessionStorage.setItem("role", response.data.roles.at(0));
-
-        /*
-        {
-    "id": 1,
-    "username": "super_admin",
-    "email": "super_admin@gmail.comp",
-    "roles": [
-        "ROLE_ADMIN"
-    ],
-    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcl9hZG1pbiIsImlhdCI6MTY4MzYyMTIwMSwiZXhwIjoxNjgzNzA3NjAxfQ.9-OT5N77jJCHGHQd_XBQ2Pcjx5kbNCHauXmVjqT6LDOzB2oi_jODEA7qnJ2c18zouFfMN7euzXpUlAegrWZqkQ",
-    "tokenType": "Bearer"
-}
-        
-        */
-      //  navigate("/tutor");
-       // redirect("/tutor");
+        if (response.data.accessToken) {
+          navigate("/tutor");
+        }
       });
-  };
+  }
 
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
       <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
         <form className="mt-6">
           <div className="mb-2">
-            <label
-              for="text"
-              className="block text-sm font-semibold text-gray-800"
-            >
+            <label className="block text-sm font-semibold text-gray-800">
               Username
             </label>
             <input
@@ -74,10 +57,7 @@ const Login = () => {
             />
           </div>
           <div className="mb-2">
-            <label
-              for="password"
-              className="block text-sm font-semibold text-gray-800"
-            >
+            <label className="block text-sm font-semibold text-gray-800">
               Password
             </label>
             <input
@@ -94,8 +74,12 @@ const Login = () => {
           </a>
           <div className="mt-6">
             <button
-              onClick={() => loginCall()}
-              className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+              onClick={
+                (e) => {
+                  e.preventDefault();
+                  loginCall();
+                }}
+              className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-orange-500 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
             >
               Login
             </button>
