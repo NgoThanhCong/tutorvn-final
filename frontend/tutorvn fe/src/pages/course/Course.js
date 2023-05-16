@@ -92,7 +92,7 @@ const Course = () => {
         .then((response) => {
             getCourseList();
             console.log(response.status, response.data);
-            navigate("/course")
+            navigate("/admin/course")
         });
 
 

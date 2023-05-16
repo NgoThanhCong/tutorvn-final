@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-concat */
 /* eslint-disable react/jsx-no-undef */
 import Layout from './components/Layout'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
@@ -29,34 +30,38 @@ import InsertNotification from './pages/notification/InsertNotification'
 import './index.css';
 import ChangePassword from './pages/ChangePassword'
 import HomePage from './pages/HomePage'
+import { API_ADMIN } from './components/RouteURL'
+
 //https://flaviocopes.com/axios-send-authorization-header/
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                    <Route path='/' element={<Tutor />} />  
-                    <Route path='/profile' element={<Profile />} />
-                    <Route path='/update-password' element={<ChangePassword />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/test' element={<Test />} />
+                    <Route path= {API_ADMIN + '/'} element={<Tutor />} />  
+                    <Route path='/admin/profile' element={<Profile />} />
+                    <Route path='/admin/update-password' element={<ChangePassword />} />
+                    <Route path='/admin/login' element={<Login />} />
+                    <Route path='/admin/test' element={<Test />} />
                     <Route path='/home-page' element={<HomePage />} />
+                    <Route path='/' element={<HomePage />} />
+                    <Route path= {API_ADMIN + '/'} element={<Tutor />} />  
 
-                    <Route path='/tutor/insert' element={(<InsertTutor/>) } />                   
-                    <Route path='/tutor' element={<Tutor />} />  
-                    <Route path='/tutor/edit' element={<EditTutor />} />
-                    <Route path='/tutor/list' element={<ListTutor />} />
-                    <Route path='/tutor/detail' element={<DetailTutor />} />
-                    <Route path='/customer' element={<Customer/>} /> 
-                    <Route path='/customer/insert' element={<InsertCustomer/>} /> 
-                    <Route path='/customer/detail' element={<DetailCustomer/>} />
-                    <Route path='/customer/edit' element={<EditCustomer/>} />
+                    <Route path='/admin/tutor/insert' element={(<InsertTutor/>) } />                   
+                    <Route path='/admin/tutor' element={<Tutor />} />  
+                    <Route path='/admin/tutor/edit' element={<EditTutor />} />
+                    <Route path='/admin/tutor/list' element={<ListTutor />} />
+                    <Route path='/admin/tutor/detail' element={<DetailTutor />} />
+                    <Route path='/admin/customer' element={<Customer/>} /> 
+                    <Route path='/admin/customer/insert' element={<InsertCustomer/>} /> 
+                    <Route path='/admin/customer/detail' element={<DetailCustomer/>} />
+                    <Route path='/admin/customer/edit' element={<EditCustomer/>} />
                     <Route path='/course/detail' element={<DetailCourse />} />
                     <Route path='/course' element={<Course />} />
                     <Route path='/course/insert' element={<InsertCourse />} />
-                    <Route path='/course/edit' element={<EditCourse />} />
-                    <Route path='/notification' element={<Notification />} />  
-                    <Route path='/notification/insert' element={<InsertNotification />} />  
-                    <Route path='/notification/edit' element={<InsertNotification />} />  
+                    <Route path='/admin/course/edit' element={<EditCourse />} />
+                    <Route path='/admin/notification' element={<Notification />} />  
+                    <Route path='/admin/notification/insert' element={<InsertNotification />} />  
+                    <Route path='/admin/notification/edit' element={<InsertNotification />} />  
                 </Routes>
         </BrowserRouter>
     )
