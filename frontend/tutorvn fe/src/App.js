@@ -28,6 +28,7 @@ import Notification from './pages/notification/Notification'
 import InsertNotification from './pages/notification/InsertNotification'
 import './index.css';
 import ChangePassword from './pages/ChangePassword'
+import HomePage from './pages/HomePage'
 //https://flaviocopes.com/axios-send-authorization-header/
 function App() {
     return (
@@ -36,9 +37,10 @@ function App() {
                     <Route path='/' element={<Tutor />} />  
                     <Route path='/profile' element={<Profile />} />
                     <Route path='/update-password' element={<ChangePassword />} />
-
                     <Route path='/login' element={<Login />} />
                     <Route path='/test' element={<Test />} />
+                    <Route path='/home-page' element={<HomePage />} />
+
                     <Route path='/tutor/insert' element={(<InsertTutor/>) } />                   
                     <Route path='/tutor' element={<Tutor />} />  
                     <Route path='/tutor/edit' element={<EditTutor />} />

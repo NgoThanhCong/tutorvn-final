@@ -136,7 +136,7 @@ const EditTutor = () => {
 
 
   return (<>
-    <div className='flex flex-auto h-screen'>
+    <div className='flex flex-auto'>
         <Sidebar />
         <div className='grow bg-sky-700'>
             <Navbar />
@@ -144,7 +144,7 @@ const EditTutor = () => {
     <div class="bg-sky-700 container mx-auto px-4 sm:px-8">
       <div class="py-8">
         <div>
-          <h2 class="text-2xl font-semibold leading-tight">Edit Tutor</h2>
+          <h2 class="text-2xl font-semibold leading-tight text-white">Edit Tutor</h2>
         </div>
       </div>
 

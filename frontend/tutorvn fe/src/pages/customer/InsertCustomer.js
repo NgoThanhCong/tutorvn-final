@@ -58,12 +58,16 @@ const InsertCustomer = () => {
 
         };
 
-
+        const access_token = sessionStorage.getItem("accessToken");
         console.log(customerData);
         axios.defaults.baseURL = 'http://localhost:8080';
         axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        axios.post("http://localhost:8080/api/customer/insert", customerData)
+        axios.post("http://localhost:8080/api/customer/insert", customerData, {
+            headers: {
+                'Authorization': `Bearer ${access_token}`
+            }
+            })
             .then((response) => {
                 console.log(response.status, response.data);
                 navigate("/customer")

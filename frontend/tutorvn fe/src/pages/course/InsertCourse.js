@@ -21,6 +21,8 @@ const InsertCourse = () => {
   const [address, setAddress] = useState("");
   const [learningTime, setLearningTime]  = useState("");
   const [fee, setFee] = useState("");
+  const [tutorID, setTutorID] = useState();
+  const [customerID, setCustomerID] = useState();
 
   const onChange = (value) => {
     console.log(`selected ${value}`);
@@ -104,14 +106,14 @@ const InsertCourse = () => {
       }).then((response) => {
       setListSubject(response.data.data);
 
-      var indents = [];
-      for (var i = 0; i < listSubject.length; i++) {
-        indents.push({ value: listSubject[i].id, label: listSubject[i].name });
-      }
-      setListSubjectString(indents);
+      // var indents = [];
+      // for (var i = 0; i < listSubject.length; i++) {
+      //   indents.push({ value: listSubject[i].id, label: listSubject[i].name });
+      // }
+      // setListSubjectString(indents);
 
     });
-  }, [listSubject]);
+  }, []);
 
   const navigateCourse = useNavigate();
   const onChangeCheckbox = (checkedValues) => {
@@ -126,8 +128,14 @@ const InsertCourse = () => {
 // }, []);
 
 const baseUrlTUtorList = "http://localhost:8080/api/v1/tutor/getAll";
+const baseUrlCustomerList = "http://localhost:8080/api/customer/findAll";
 
 const [tutorList, setTutorList] = React.useState([]);
+const [customerList, setCustumerList] = React.useState([]);
+
+const [tutor, setTutor] = useState();
+const [customer, setCustomer] = useState();
+
 React.useEffect(() => {
   const access_token = sessionStorage.getItem("accessToken");
 
@@ -137,6 +145,19 @@ React.useEffect(() => {
     }
     }).then((response) => {
       setTutorList(response.data.data);
+  });
+}, []);
+
+React.useEffect(() => {
+  const access_token = sessionStorage.getItem("accessToken");
+  // axios.defaults.headers.get['Content-Type'] = 'application/json;charset=utf-8';
+  // axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
+  axios.get(baseUrlCustomerList, {
+    headers: {
+        'Authorization': `Bearer ${access_token}`
+    }
+    }).then((response) => {
+      setCustumerList(response.data.data);
   });
 }, []);
 const getTutorList = () => {
@@ -237,12 +258,13 @@ const getTutorList = () => {
       })
       .then((response) => {
         console.log(response.status, response.data);
-
         navigate("/course")
       });
   };
 
   const [open, setOpen] = useState(false);
+  const [openCustomer, setOpenCustomer] = useState(false);
+
   const dateFormat = 'YYYY/MM/DD';
   return (<>
     <div className='flex flex-auto'>
@@ -257,7 +279,7 @@ const getTutorList = () => {
           <h2 class="text-2xl text-white font-semibold leading-tight">Insert Course</h2>
         </div>
       </div>
-      <Card
+      <Card className='flex flex-col'
         title="Information of tutor"
         bordered={false}
       >
@@ -265,6 +287,9 @@ const getTutorList = () => {
           <Button onClick={() => setOpen(true)}>
             + Assign Tutor to Course
           </Button>
+          <br/>
+          <br/>
+          <label>TutorName: {tutor}</label>
           <Modal
             title="List Tutors"
             centered
@@ -279,25 +304,7 @@ const getTutorList = () => {
                   <h2 class="text-2xl font-semibold leading-tight">Users</h2>
                 </div>
                 <div class="my-2 flex sm:flex-row flex-col">
-                  <div class="flex flex-row mb-1 sm:mb-0">
-                    <div class="relative">
-
-                    </div>
-                    <div class="relative">
-                      <select
-                        class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                        <option>All</option>
-                        <option>Active</option>
-                        <option>Inactive</option>
-                      </select>
-                      <div
-                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
+                 
                   <div class="block relative">
                     <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
                       <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
@@ -329,7 +336,10 @@ const getTutorList = () => {
                     <Table onRow={(record, rowIndex) => {
                       return {
                         onClick: event => {
-                          navigateCourse("/course/detail")  // dieu huong
+                          //navigateCourse("/course/detail")  // dieu huong
+                          setTutor(tutorList.at(rowIndex).name)
+                          setTutorID(tutorList.at(rowIndex).id)
+                          console.log(tutorList.at(rowIndex))
                         }, // click row
                       };
                     }} columns={columnsCourse} dataSource={tutorList} />
@@ -340,42 +350,93 @@ const getTutorList = () => {
           </Modal>
         </>
       </Card>
+      <br/>
+      <br/>
+      <Card className='flex flex-col'
+        title="Information of Customer"
+        bordered={false}
+      >
+        <>
+          <Button onClick={() => setOpenCustomer(true)}>
+            + Customer Infor
+          </Button>
+          <br/>
+          <br/>
+          <label>Customer Name: {customer}</label>
+          <Modal
+            title="List Customer"
+            centered
+            open={openCustomer}
+            onOk={() => setOpenCustomer(false)}
+            onCancel={() => setOpenCustomer(false)}
+            width={1000}
+          >
+            <div class="container mx-auto px-4 sm:px-8">
+              <div class="py-8">
+                <div>
+                  <h2 class="text-2xl font-semibold leading-tight">Customer</h2>
+                </div>
+                <div class="my-2 flex sm:flex-row flex-col">
+                 
+                  <div class="block relative">
+                    <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+                      <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
+                        <path
+                          d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
+                        </path>
+                      </svg>
+                    </span>
+                    <input placeholder="Search"
+                      class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                  </div>
+                  <div class="w-full flex justify-end space-x-2">   {/**/}
+                    <button icon={<PlusOutlined />} onClick={
+
+                      () => { navigateCourse("/course/insert") }
+                    }
+                      type="button"
+                      class="inline-block rounded  bg-red-500 px-6 pt-2.5 pb-2 text-xs font-medium
+                            uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150
+                            ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+                            focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+                            focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
+                      Assign Customer
+                    </button>
+                  </div>
+                </div>
+                <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                  <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                    <Table onRow={(record, rowIndex) => {
+                      return {
+                        onClick: event => {
+                          //navigateCourse("/course/detail")  // dieu huong
+                          setCustomer(customerList.at(rowIndex).name)
+                          setCustomerID(customerList.at(rowIndex).id)
+                          // console.log(tutorList.at(rowIndex))
+                        }, // click row
+                      };
+                    }} columns={columnsCourse} dataSource={customerList} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Modal>
+        </>
+      </Card>
       <br />
       <Card
-        title="Requests for tutors"
+        title="Required for tutors"
         bordered={false}
       >
         <label>Gender Required</label>
         <br />
-        <Radio.Group name="radiogroup2" defaultValue={3}>
+        <Radio.Group name="radiogroup2" defaultValue={1} onChange={onChangeGenderRequire}>
           <Radio value={1}>Male</Radio>
-          <Radio value={2}>Female</Radio>
-          <Radio value={3}>Random</Radio>
+          <Radio value={0}>Female</Radio>
         </Radio.Group>
         <br />
         <br />
-        <Select
-
-          labelInValue
-          defaultValue={{
-            value: 'student',
-            label: 'Student',
-          }}
-          style={{
-            width: 120,
-          }}
-          onChange={handleChange}
-          options={[
-            {
-              value: 'teacher',
-              label: 'teacher',
-            },
-
-          ]}
-        />
-        <br />
-        <br />
-        <TextArea style={{ width: '70%', height: '150px' }} rows={4} placeholder="Description of the request" maxLength={400} />
+        <TextArea style={{ width: '100%', height: '150px' }} rows={4} placeholder="Description of the request" maxLength={400} />
         <br />
       </Card>
 
@@ -470,7 +531,7 @@ const getTutorList = () => {
 
         {/* <br /><Table dataSource={dataSource} columns={columns} />; */}
         <br />
-        <TextArea style={{ width: '70%', height: '150px' }} rows={4} placeholder="Describe the student's knowledge status and additional need knowledge" maxLength={4} />
+        <TextArea style={{ width: '100%', height: '150px' }} rows={4} placeholder="Describe the student's knowledge status and additional need knowledge" maxLength={4} />
         <br />
 
 

@@ -24,6 +24,9 @@ public class Tutor {
     private String phone;
     private boolean gender;   // *gioi tinh
     private Date birthDay;
+
+    private  Long userID;
+
     private String email;
     protected String experiences;   // *mo ta kinh nghiem
     private String currentJob;   // *cong viec hien tai
@@ -53,6 +56,18 @@ public class Tutor {
         this.university = university;
         this.major = major;
         this.isGraduated = isGraduated;
+    }
+
+    public Long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Long userID) {
+        this.userID = userID;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
     }
 
     public Tutor() {

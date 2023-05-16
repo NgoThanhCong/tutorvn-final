@@ -8,12 +8,15 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "phone" }, name = "phone_constraint")})
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+
+    @Column(unique=true)
     private String phone;
     private String address;
     private String district;

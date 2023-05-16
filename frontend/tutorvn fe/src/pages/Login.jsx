@@ -36,6 +36,17 @@ const Login = () => {
         if (response.data.accessToken) {
           navigate("/tutor");
         }
+      }).catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          if(error.response.status===401){
+            //navigate("/login");
+            alert("Incorrect username or password. Please try again!!");
+
+          }
+        }
       });
   }
 

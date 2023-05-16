@@ -1,5 +1,7 @@
 package com.greenwich.tutorvn.service;
 import com.greenwich.tutorvn.model.Order;
+import com.greenwich.tutorvn.model.OrderStatus;
+import com.greenwich.tutorvn.model.Tutor;
 import com.greenwich.tutorvn.repository.OrderRepository;
 import com.greenwich.tutorvn.request.RequestOrder;
 import org.aspectj.weaver.ast.Or;
@@ -35,10 +37,30 @@ public class OrderService {
         Optional<Order> optionalOrder = orderRepository.findById(requestOrder.getIdOrder());
         if(optionalOrder.isPresent()) {
             Order order = optionalOrder.get();
+            order.setStatus(OrderStatus.ORDER_DONE);
+
             order.setTutor_ID(requestOrder.getIdTutor());
             notificationService.insert(order);
             return orderRepository.save(order);
         }
         return  null;
+    }
+
+    public Order requestTutor(RequestOrder requestOrder){
+        Optional<Order> optionalOrder = orderRepository.findById(requestOrder.getIdOrder());
+        if(optionalOrder.isPresent()){
+            Order order = optionalOrder.get();
+            List<Long> listIDTutor = order.getListTutorRequired();
+            for(Long id: listIDTutor)
+            {
+                if(requestOrder.getIdTutor()==id){
+                    return null;
+                }
+            }
+            listIDTutor.add(requestOrder.getIdTutor());
+            order.setListTutorRequired(listIDTutor);
+            return  orderRepository.save(order);
+        }
+        return null;
     }
 }

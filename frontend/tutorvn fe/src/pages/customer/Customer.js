@@ -18,6 +18,7 @@ const Customer = () => {
 
     const [customerList, setCustomerList] = React.useState([]);
 
+    //const navigate = useNavigate();
     const getCustomerList = () => {
         const access_token = sessionStorage.getItem("accessToken");
         axios.get(baseUrl, {
@@ -28,6 +29,7 @@ const Customer = () => {
             setCustomerList(response.data.data);
         });
     }
+    const navigate = useNavigate();
 
     useEffect(() => {
         const accessToken = sessionStorage.getItem("accessToken");
@@ -39,6 +41,37 @@ const Customer = () => {
         }
       },[]);
 
+      const searchByKeyword =  (e) => {
+        e.preventDefault();
+
+        const keyword = e.target.value;
+        const access_token = sessionStorage.getItem("accessToken");
+        var url_searchKeyword = "";
+        if(keyword==""){
+            url_searchKeyword = "http://localhost:8080/api/customer/findAll";
+
+        }else {
+            url_searchKeyword = "http://localhost:8080/api/customer/search?keyword="+ keyword;
+
+        }
+        axios.get(url_searchKeyword, {
+        headers: {
+            'Authorization': `Bearer ${access_token}`
+        }
+        })
+        .then((res) => {
+            console.log("AAAAAAA");
+        console.log(res.data)
+           setCustomerList(res.data.data);
+
+        })
+        .catch((error) => {
+            console.log("BBBBBBBB");
+
+        console.error(error)
+        })
+    }
+
     React.useEffect(() => {
         const access_token = sessionStorage.getItem("accessToken");
         axios.get(baseUrl, {
@@ -46,8 +79,25 @@ const Customer = () => {
                 'Authorization': `Bearer ${access_token}`
             }
             }).then((response) => {
-            setCustomerList(response.data.data);
-        });
+
+                console.log({"response12345:": response});
+                if(response.status==200){
+                    setCustomerList(response.data.data);
+        
+                }else if(response.status==401){
+                    navigate("/login");
+                }
+        }) .catch(function (error) {
+            if (error.response) {
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+              if(error.response.status===401){
+                navigate("/login");
+
+              }
+            }
+          });;
     }, []);
 
     const onDeleteTutor = async () => {
@@ -70,7 +120,6 @@ const Customer = () => {
     const hideModal = () => {
         setOpen(false);
     };
-    const navigate = useNavigate();
     const navigateEditTutor = (index) => {
     const value = customerList.at(index);
     console.log(value)
@@ -177,7 +226,7 @@ const Customer = () => {
                                 </path>
                             </svg>
                         </span>
-                        <input placeholder="Search"
+                        <input placeholder="Search" onChange={searchByKeyword}
                             class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
                     </div>
                     <div class="w-full flex justify-end space-x-2">   {/**/}

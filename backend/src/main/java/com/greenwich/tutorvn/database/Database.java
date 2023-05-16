@@ -1,10 +1,9 @@
 package com.greenwich.tutorvn.database;
 
-import com.greenwich.tutorvn.model.ERole;
-import com.greenwich.tutorvn.model.Role;
-import com.greenwich.tutorvn.model.SubjectClass;
-import com.greenwich.tutorvn.model.User;
+import com.greenwich.tutorvn.model.*;
 import com.greenwich.tutorvn.repository.*;
+import com.greenwich.tutorvn.service.SequenceGeneratorService;
+import org.hibernate.type.descriptor.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -20,15 +19,37 @@ public class Database {
     @Autowired
     PasswordEncoder encoder;
 
+    @Autowired
+    SequenceGeneratorService sequenceGeneratorService;
+
     // Generate template data
     @Bean
     CommandLineRunner initDatabase(TutorRepository tutorRepository ,
                                    CustomerRepository customerRepository,
-                                   SubjectRepository subjectRepository, RoleRepository roleRepository, UserRepository userRepository){
+                                   OrderRepository orderRepository,
+                                   SubjectRepository subjectRepository,
+                                   RoleRepository roleRepository, UserRepository userRepository, TestRepository testRepository){
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
 
+//                for(int i = 0;i<500000;i++){
+//
+//                    Test test = new Test();
+//                    test.setId(sequenceGeneratorService.generateSequence(Test.SEQUENCE_NAME));
+//                    test.setName(i+"KKKK");
+//                    Date date = new Date(new Date().getTime() + i * 24 * 60 * 60 * 1000);
+//                    test.setCreatedDate(date);
+//                    testRepository.insert(test);
+//                }
+
+/*
+                for(Order order: orderRepository.findAll())
+                {
+                   // order.setStatus(0);
+                    order.setNumberRequest(order.getNumberRequest());
+                    orderRepository.save(order);
+                }*/
                 Role role1 = new Role();
                 role1.setId(1);
                 role1.setName(ERole.ROLE_ADMIN);
@@ -81,13 +102,16 @@ public class Database {
                 subjectClass8.setName("Biology");
                 subjectClass8.setCategory("biology ");
 
-                subjectRepository.save(subjectClass1);
-                subjectRepository.save(subjectClass2);
-                subjectRepository.save(subjectClass3);
-                subjectRepository.save(subjectClass4);
-                subjectRepository.save(subjectClass8);
-
-
+                if(subjectRepository.findAll().size()==0){
+                    subjectRepository.save(subjectClass1);
+                    subjectRepository.save(subjectClass2);
+                    subjectRepository.save(subjectClass3);
+                    subjectRepository.save(subjectClass4);
+                    subjectRepository.save(subjectClass8);
+                }
+//                User user = userRepository.findById(1l).get();
+//                user.setPassWord(encoder.encode("abcd1234"));
+//                userRepository.save(user);
 
                 if(userRepository.findAll().size()==0){
                     User admin = new User();
@@ -98,8 +122,7 @@ public class Database {
                     admin.setCreatedTime(new Date());
 //                    admin.setNote("This is super account");
                     Set<Role> roles = new HashSet<>();
-                    admin.setPassWord(encoder.encode("Azd1232421@#$$$$$!!@!@$#$#$#$%%"));
-                    //Mochoat6886@
+                    admin.setPassWord(encoder.encode("A12345678"));
                     Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                     roles.add(adminRole);

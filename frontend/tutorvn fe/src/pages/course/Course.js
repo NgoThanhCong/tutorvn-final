@@ -19,6 +19,7 @@ const Course = () => {
     const baseUrl = "http://localhost:8080/api/course";
 
     const [courseList, setCourseList] = React.useState([]);
+    const [index, setIndex]= useState();
 
     const getCourseList = () => {
         const access_token = sessionStorage.getItem("accessToken");
@@ -49,11 +50,53 @@ const Course = () => {
             }
             }).then((response) => {
             console.log(response);
-            setCourseList(response.data.data);
-        });
+            if(response.data.status==200){
+                setCourseList(response.data.data);
+
+            }else if(response.data.status==401){
+                redirect("/login");
+            }
+        }).catch(function (error) {
+            if (error.response) {
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+              if(error.response.status===401){
+                navigate("/login");
+              }
+            }
+          });
     }, []);
 
+    const requestTutor = () => {
+        const course = courseList.at(index);
+        const courseID = course.id;
+        const userID = parseInt(sessionStorage.getItem("id"));
+        const accessToken = sessionStorage.getItem("accessToken");
+        const requestData = {
+            "idTutor":userID,
+            "idOrder": courseID
+        }
+        console.log({"index":index});
 
+        console.log(requestData);
+
+        axios.defaults.baseURL = 'http://localhost:8080';
+        axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.post("http://localhost:8080/api/course/requestTutor", requestData, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+        })
+        .then((response) => {
+            getCourseList();
+            console.log(response.status, response.data);
+            navigate("/course")
+        });
+
+
+    }
     const navigate = useNavigate();
     // const navigateEditCourse = () => {
     //     navigateEditCourse("/course/edit");
@@ -89,16 +132,27 @@ const Course = () => {
             key: 'address',
         },
         {
-            title: 'learningMode',
-            dataIndex: 'learningMode',
-            key: 'learningMode',
-        },
-        {
             title: 'Fee',
             dataIndex: 'fee',
             key: 'fee',
         },
-        // {
+        {
+            title: 'Status',
+            dataIndex: 'statusString',
+            key: 'statusString',
+        },
+        {
+            title: 'NumberRequest',
+            dataIndex: 'numberRequest',
+            key: 'numberRequest',
+        },
+        {
+            title: 'LearningMode',
+            dataIndex: 'learningModeString',
+            key: 'learningModeString',
+        },
+        // {numberRequest
+        //learningModeString
         //     title: 'Status',
         //     key: 'status',
         //     dataIndex: 'status',
@@ -129,6 +183,8 @@ const Course = () => {
             key: 'action',
             render: (index, record) => (
                 <Space size="middle">
+
+                    <a onClick={() => requestTutor()} >Regist Course</a>
                     <a >Edit</a>
                     
 
@@ -297,7 +353,7 @@ const Course = () => {
                     return {
                         onClick: event => {
                             console.log("row click" + rowIndex);
-                            // setIndex(rowIndex);
+                            setIndex(rowIndex);
                             // navigateEditTutor(rowIndex)
 
                             //navigate("/tutor/detail")  // dieu huong

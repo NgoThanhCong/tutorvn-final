@@ -1,0 +1,129 @@
+.headerStyle  {
+    margin-left: auto;
+    margin-right: auto;
+    /* justify-content: center; */
+    width: 100%;
+    height: 100%;
+   color: blue;
+    background-color: rgb(247, 157, 172);
+    /* align-items: center; */
+    display: flex;
+     
+  }
+  .box {
+    width: 200px;
+    height: 200px;
+    border: 2px solid black;
+    padding: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+  .images2{
+    width: 367px;
+     margin-left: 5px;
+     margin-right: auto;
+      align-items: center;
+    justify-content: center;
+     height: 270px;
+     border: 1px solid rgb(244, 70, 70);
+
+  }
+  .images3{
+    width: 367px;
+     margin-left: auto;
+     margin-right: auto;
+      align-items: center;
+    justify-content: center;
+     height: 270px;
+     border: 1px solid rgb(244, 70, 70);
+  }
+  .images4{
+    width: 750px;
+     margin-left: auto;
+     margin-right: auto;
+      align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+     height: 370px;
+     border: 1px solid rgb(244, 70, 70);
+  }
+  .images5{
+    width: 700px;
+    height: 320px;
+     margin-left: auto;
+     margin-right: auto;
+      align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    
+     border: 1px solid rgb(244, 70, 70);
+  }
+  .images6{
+    width: 730px;
+    height: 350px;
+     margin-left: auto;
+     margin-right: auto;
+      align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    
+     border: 1px solid rgb(244, 70, 70);
+  }
+  .images7{
+    width: 670px;
+    height: 320px;
+     margin-left: auto;
+     margin-right: auto;
+      align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    
+  
+  }
+  .images8{
+    width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    justify-content: center;
+    border-radius:10px;
+    height: 280px;
+    
+  }
+  .divContent{
+    width: 1100px;
+    margin-left: auto;
+    margin-right: auto; 
+    margin-top: 80px;
+    
+    height: auto; 
+    left: 50;
+    top: 360px;
+    display: flex;
+    
+  }
+  .divContent2{
+    width: 1100px;
+    margin-left: auto;
+    margin-right: auto; 
+    margin-top: 20px;
+    color: black;
+    height: auto; 
+    left: 50;
+    top: 360px;
+  }
+  .h2Style{
+    color:dodgerblue;
+  }
+
+  .centerStyle{
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+  .h1centerStyle{
+  font-size: 25px;
+  color: #4891f0;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  }

@@ -17,6 +17,9 @@ public interface TutorRepository extends JpaRepository <Tutor, Long> {
 
     List<Tutor> findAllByIsDelete(boolean isDelete);
 
+    Optional<Tutor> findByPhone(String phone);
+    Optional<Tutor> findByEmail(String email);
+
     List<Tutor> findAllByName(String keyword); // *Tim kiem theo ten
 }
 

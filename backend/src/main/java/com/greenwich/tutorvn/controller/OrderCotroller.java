@@ -1,8 +1,5 @@
 package com.greenwich.tutorvn.controller;
-import com.greenwich.tutorvn.model.Customer;
-import com.greenwich.tutorvn.model.Order;
-import com.greenwich.tutorvn.model.ResponseObject;
-import com.greenwich.tutorvn.model.Tutor;
+import com.greenwich.tutorvn.model.*;
 import com.greenwich.tutorvn.repository.OrderRepository;
 import com.greenwich.tutorvn.request.RequestOrder;
 import com.greenwich.tutorvn.service.NotificationService;
@@ -63,6 +60,9 @@ public class OrderCotroller {
 
         order.setDelete(false);
         order.setActive(true);
+        order.setStatus(OrderStatus.ORDER_NEW);
+        order.setNumberRequest(order.getListTutorRequired().size()
+        );
         System.out.println("insertorder");
 
         order.setId(sequenceGeneratorService.generateSequence(order.SEQUENCE_NAME));
@@ -80,7 +80,7 @@ public class OrderCotroller {
             order.setTutor_ID(requestOrder.getIdTutor());
 
             return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
-                    "Success",orderRepository.save(order) ));
+                    "Success",orderService.assignTutor(requestOrder) ));
         }
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject(200,
                 "Not implement","" ));
@@ -92,10 +92,9 @@ public class OrderCotroller {
         Optional<Order> optionalOrder = orderRepository.findById(requestOrder.getIdOrder());
         if(optionalOrder.isPresent())
         {
-            Order order = optionalOrder.get();
-            order.getListTutorRequired().add(requestOrder.getIdTutor());
+
             return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
-                    "Success",orderRepository.save(order) ));
+                    "Success",orderService.requestTutor(requestOrder) ));
         }
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject(200,
                 "Not implement","" ));

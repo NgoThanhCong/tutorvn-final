@@ -38,8 +38,24 @@ const Notification = () => {
                 'Authorization': `Bearer ${access_token}`
             }
             }).then((response) => {
-            setNotifyList(response.data.data);
-        });
+
+                if(response.data.status==200){
+                    setNotifyList(response.data.data);
+    
+                }else if(response.data.status==401){
+                    redirect("/login");
+                }
+        }).catch(function (error) {
+            if (error.response) {
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+              if(error.response.status===401){
+                navigate("/login");
+
+              }
+            }
+          });
     }, []);
 
     useEffect(() => {

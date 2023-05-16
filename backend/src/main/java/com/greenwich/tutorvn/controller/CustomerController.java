@@ -4,9 +4,11 @@ import com.greenwich.tutorvn.model.Order;
 import com.greenwich.tutorvn.model.ResponseObject;
 import com.greenwich.tutorvn.repository.CustomerRepository;
 import com.greenwich.tutorvn.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.Optional;
 @RestController  // khai bao anotation restcontroller de tao ra 1 class Rest API
 @RequestMapping(path = "/api/customer")
 @CrossOrigin(origins = "http://localhost:3000,http://localhost:3002", maxAge = 3600)
+@Validated
 public class CustomerController
 {
     @Autowired
@@ -23,9 +26,15 @@ public class CustomerController
     @Autowired
     CustomerService customerService;
     @PostMapping("/insert")
-    ResponseEntity<ResponseObject> insert (@RequestBody Customer customer)
+    ResponseEntity<ResponseObject> insert ( @Valid @RequestBody Customer customer)
     {
 
+        Optional<Customer> optionalCustomer = customerRepository.findByPhone(customer.getPhone());
+        if(optionalCustomer.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(new
+                    ResponseObject(204,"Cannot insert customer. Duplicate phone ", optionalCustomer.get()));
+
+        }
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",customerService.insert(customer)));
     }
 
@@ -85,5 +94,13 @@ public class CustomerController
      return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,
              "Success",""));
 }
+
+    @GetMapping("/search")
+    ResponseEntity<ResponseObject> searchByKeyword(@RequestParam String keyword)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",
+                customerService.findByKeyword(keyword)));
+    }
+
 
 }

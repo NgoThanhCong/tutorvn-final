@@ -118,6 +118,14 @@ public class TutorController {
                 tutorRepository.findAllByIsDelete(false)));
     }
 
+
+    @GetMapping("/search")
+    ResponseEntity<ResponseObject> searchByKeyword(@RequestParam String keyword)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(200,"Success",
+                tutorService.findByKeyword(keyword)));
+    }
+
     @PutMapping("/update")
     ResponseEntity<ResponseObject> update(@Valid @RequestBody Tutor tutor)
     {

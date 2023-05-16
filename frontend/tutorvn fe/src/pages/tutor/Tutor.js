@@ -49,6 +49,39 @@ const Tutor = () => {
         })
     }
 
+
+    const searchByKeyword =  (e) => {
+        e.preventDefault();
+
+        const keyword = e.target.value;
+        const access_token = sessionStorage.getItem("accessToken");
+        var url_searchKeyword = "";
+        if(keyword==""){
+            url_searchKeyword = "http://localhost:8080/api/v1/tutor/getAll";
+
+        }else {
+            url_searchKeyword = "http://localhost:8080/api/v1/tutor/search?keyword="+ keyword;
+
+        }
+        axios.get(url_searchKeyword, {
+        headers: {
+            'Authorization': `Bearer ${access_token}`
+        }
+        })
+        .then((res) => {
+            console.log("AAAAAAA");
+        console.log(res.data)
+           setTutorList(res.data.data);
+
+        })
+        .catch((error) => {
+            console.log("BBBBBBBB");
+
+        console.error(error)
+        })
+    }
+
+
     React.useEffect(() => {
         const access_token = sessionStorage.getItem("accessToken");
         console.log({"access_token":access_token});
@@ -59,12 +92,22 @@ const Tutor = () => {
         })
         .then((res) => {
         console.log(res.data)
-        setTutorList(res.data.data);
-
+        if(res.data.status==200){
+            setTutorList(res.data.data);
+        }else if(res.data.status==401){
+            redirect("/login");
+        }
         })
-        .catch((error) => {
-        console.error(error)
-        })
+        .catch(function (error) {
+            if (error.response) {
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+              if(error.response.status===401){
+                navigate("/login");
+              }
+            }
+          })
     }, []);
 
     const onDeleteTutor = async () => {
@@ -223,7 +266,7 @@ const Tutor = () => {
                                                 </path>
                                             </svg>
                                         </span>
-                                        <input placeholder="Search"
+                                        <input placeholder="Search" onChange={searchByKeyword}
                                             class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
                                     </div>
                                     <div class="w-full flex justify-end space-x-2">   {/**/}
